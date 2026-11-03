@@ -1,6 +1,6 @@
 ---
 name: brainstorming
-description: "You MUST use this before any creative work - creating features, building components, adding functionality, modifying behavior, or planning anything new, in software or out of it (a talk, a business, a renovation)."
+description: "Use before building, adding or changing anything non-trivial: features, components, behavior changes, new plans."
 ---
 
 # Brainstorming
@@ -29,7 +29,9 @@ Before you start implementing, you must, in order:
    human partner pick one (see Lay out the approaches).
 2. Write the design doc, short or full (see Size the Work).
 3. Get their approval of that doc.
-4. Invoke the superpowers:writing-plans skill.
+4. For a project, invoke the superpowers:writing-plans skill. For a small
+   change, implement the approved short design with
+   superpowers:test-driven-development.
 
 Two things aren't implementing: a spike they said yes to (see Spike to
 feel things out), and doing what they asked once they've opted out of
@@ -131,24 +133,24 @@ already plain, say what you're hoping to learn or what the answer would
 change. A proposal they can correct, plus your reason for it, often
 beats a question.
 
-**Offer recon.** Once you have a bit of grounding and looking further
-would help, offer to go look: deeper into their codebase or project,
-their own files and data, or the web. Say what you'd look for. They
-decide whether you go.
+**Offer recon.** In their codebase or project, just look; you don't
+need to ask. When looking further would help and it means their own
+files and data or the web, offer to go look and say what you'd look
+for. They decide whether you go.
 
 **Lay out the approaches.** Once you understand what they want, and
 before you write anything up, put the ways of building it in a message
 of its own. Come up with several real alternatives and drop the weak
 ones, including any that work against why they want it and any the
-existing work rules out. Present the two or three that remain, grounding
-each in what the project actually does and saying what it trades off.
-Recommend one and say why, then ask which way they want to go. When
+existing work rules out. Lead with the one you recommend and why, then
+the other one or two, grounding each in what the project actually does
+and saying what it trades off. Then ask which way they want to go. When
 there's genuinely one sensible way, say so and explain why the others
 don't fit. This is for how it gets built; for what they want, get them
 describing first.
 
-**Show, don't tell.** Offer the visual companion (below) whenever seeing
-would help more than reading:
+**Show, don't tell.** Offer the visual companion (below; not in cloud
+sessions) whenever seeing would help more than reading:
 
 - something they'll look at: a screen, a page, a printout, a sign
 - a layout or arrangement: of a screen, a room, a schedule
@@ -222,8 +224,9 @@ or two each and goes straight to your human partner, without the
 builder check.
 
 **Where it goes:** in a software repo,
-`docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md`, committed.
-Otherwise, ask. Your human partner's preferences override both.
+`docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md`. Commit it only if
+your human partner asks. Outside a repo, ask. Your human partner's
+preferences override both.
 
 **Builder check** (for a project): dispatch a fresh subagent with
 `builder-check-prompt.md` in this directory. When you tell your human
@@ -256,8 +259,10 @@ and the gate goes with it. A spike they said yes to may be built; it
 stays labeled throwaway, and keeping what it produced is a new request
 that comes back through this gate.
 
-After the design doc is approved, the next step is the plan: invoke
-superpowers:writing-plans and no other skill.
+After the design doc is approved, the next step for a project is the
+plan: invoke superpowers:writing-plans and no other skill. For a small
+change, implement the approved short design with
+superpowers:test-driven-development.
 </HARD-GATE>
 
 ## Red Flags
@@ -284,6 +289,10 @@ else in it:
 > "This might be easier if I show you. Want me to open a browser tab with some mockups?"
 
 If they decline, stay in text and don't offer again unless they raise it.
+
+**Not in cloud sessions.** When you run in a cloud or remote container,
+their browser can't reach the companion's server. Stay in text and don't
+offer it.
 
 **Per question, ask: would they understand this better by seeing it?**
 Mockups, layouts, diagrams, and side-by-side designs go in the browser.
