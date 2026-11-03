@@ -7,8 +7,8 @@ describe and size a skill so agents find it and read it.
 
 **Frontmatter (YAML):**
 - Two required fields: `name` and `description` (see [agentskills.io/specification](https://agentskills.io/specification) for all supported fields)
-- Max 1024 characters total
-- `name`: Use letters, numbers, and hyphens only (no parentheses, special chars)
+- `name`: at most 64 characters, lowercase letters, numbers, and hyphens only
+- `description`: at most 1024 characters
 - `description`: Third-person, describes ONLY when to use (NOT what it does)
   - Start with "Use when..." to focus on triggering conditions
   - Include specific symptoms, situations, and contexts
@@ -17,7 +17,7 @@ describe and size a skill so agents find it and read it.
 
 ```markdown
 ---
-name: Skill-Name-With-Hyphens
+name: skill-name-with-hyphens
 description: Use when [specific triggering conditions and symptoms]
 ---
 
@@ -125,12 +125,12 @@ Use words an agent would search for:
 
 ### 4. Token Efficiency (Critical)
 
-**Problem:** getting-started and frequently-referenced skills load into EVERY conversation. Every token counts.
+**Problem:** a skill injected into every session (like using-superpowers) and frequently loaded skills cost tokens in every conversation that uses them. Every token counts.
 
 **Target word counts:**
-- getting-started workflows: <150 words each
-- Frequently-loaded skills: <200 words total
-- Other skills: <500 words (still be concise)
+- Always-loaded skills: <200 words where possible
+- Other skills: as short as the job allows; move heavy detail into files the skill points to
+- Claude Code keeps only the first 20,000 characters of a skill re-attached after compaction (tests/skill-size checks this)
 
 **Techniques:**
 

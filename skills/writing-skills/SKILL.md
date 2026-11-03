@@ -17,7 +17,7 @@ You write test cases (pressure scenarios with subagents), watch them fail (basel
 
 **REQUIRED BACKGROUND:** You MUST understand superpowers:test-driven-development before using this skill. That skill defines the fundamental RED-GREEN-REFACTOR cycle. This skill adapts TDD to documentation.
 
-**Official guidance:** For Anthropic's official skill authoring best practices, see references/anthropic-best-practices.md. This document provides additional patterns and guidelines that complement the TDD-focused approach in this skill.
+**Anthropic's guidance:** references/anthropic-best-practices.md is a snapshot of Anthropic's skill-authoring best practices, added in October 2025 and lightly edited since; the live page may be newer. On descriptions this skill differs on purpose: a description says only when to use the skill.
 
 ## What is a Skill?
 
@@ -95,7 +95,9 @@ skills/
 A skill's `description` says only when to use it: triggering conditions and
 symptoms, starting with "Use when...". It never summarizes the skill's
 workflow, because an agent that reads a workflow summary follows it instead
-of reading the skill.
+of reading the skill. Exception: a skill with `disable-model-invocation: true`
+runs only when invoked by name, so no agent chooses it from its description;
+a short summary of what it does is fine there.
 
 When you write or change a skill's frontmatter, name or description, or
 need to cut its size, read [references/discovery.md](references/discovery.md):
@@ -163,23 +165,12 @@ Invoke bundled scripts through their interpreter in the prose (`bash scripts/too
 ## The Iron Law (Same as TDD)
 
 ```
-NO SKILL WITHOUT A FAILING TEST FIRST
+NO BEHAVIOR CHANGE WITHOUT A FAILING TEST FIRST
 ```
 
-This applies to NEW skills AND EDITS to existing skills.
+This applies to new skills and to every edit that changes what an agent does. Show the failure first: a baseline run without the change (a pressure scenario, a micro-test, or an eval). Wrote the skill or the edit before seeing that failure? Delete it and start over.
 
-Write skill before testing? Delete it. Start over.
-Edit skill without testing? Same violation.
-
-**No exceptions:**
-- Not for "simple additions"
-- Not for "just adding a section"
-- Not for "documentation updates"
-- Don't keep untested changes as "reference"
-- Don't "adapt" while running tests
-- Delete means delete
-
-**REQUIRED BACKGROUND:** The superpowers:test-driven-development skill explains why this matters. Same principles apply to documentation.
+An edit that changes no behavior (a path, a link, a typo, a rename, removing an exact duplicate) needs a careful read-through, not a test.
 
 ## Testing All Skill Types
 
@@ -331,22 +322,7 @@ step2 [label="read file"];
 helper1, helper2, step3, pattern4
 **Why bad:** Labels should have semantic meaning
 
-## STOP: Before Moving to Next Skill
-
-**After writing ANY skill, you MUST STOP and complete the deployment process.**
-
-**Do NOT:**
-- Create multiple skills in batch without testing each
-- Move to next skill before current one is verified
-- Skip testing because "batching is more efficient"
-
-**The deployment checklist below is MANDATORY for EACH skill.**
-
-Deploying untested skills = deploying untested code. It's a violation of quality standards.
-
 ## Skill Creation Checklist (TDD Adapted)
-
-**IMPORTANT: Create a todo for EACH checklist item below.**
 
 **RED Phase - Write Failing Test:**
 - [ ] Create pressure scenarios (3+ combined pressures for discipline skills)
@@ -384,16 +360,3 @@ Deploying untested skills = deploying untested code. It's a violation of quality
 **Deployment:**
 - [ ] Commit skill to git and push to your fork (if configured)
 - [ ] Consider contributing back via PR (if broadly useful)
-
-## Discovery Workflow
-
-How future agents find your skill:
-
-1. **Encounters problem** ("tests are flaky")
-2. **Searches skills** (greps descriptions, browses categories)
-3. **Finds SKILL** (description matches)
-4. **Scans overview** (is this relevant?)
-5. **Reads patterns** (quick reference table)
-6. **Loads example** (only when implementing)
-
-**Optimize for this flow** - put searchable terms early and often.

@@ -12,7 +12,7 @@ You run scenarios without the skill (RED - watch agent fail), write skill addres
 
 **REQUIRED BACKGROUND:** You MUST understand superpowers:test-driven-development before using this skill. That skill defines the fundamental RED-GREEN-REFACTOR cycle. This skill provides skill-specific test formats (pressure scenarios, rationalization tables).
 
-**Complete worked example:** See CLAUDE_MD_TESTING.md in this directory for a full test campaign testing CLAUDE.md documentation variants.
+**Worked example:** tests/writing-skills/CLAUDE_MD_TESTING.md in the repository is a planned test campaign for CLAUDE.md documentation variants (scenarios and variants; not yet run).
 
 ## When to Use
 
@@ -22,8 +22,8 @@ Test skills that:
 - Could be rationalized away ("just this once")
 - Contradict immediate goals (speed over quality)
 
-Don't test:
-- Pure reference skills (API docs, syntax guides)
+Pressure scenarios aren't needed for:
+- Pure reference skills (API docs, syntax guides): test retrieval and application instead (see SKILL.md, Testing All Skill Types)
 - Skills without rules to violate
 - Skills agents have no incentive to bypass
 
