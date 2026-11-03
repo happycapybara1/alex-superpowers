@@ -327,7 +327,7 @@ Restart any active Muse sessions after installing so the `SessionStart` hook tak
 
 Sometimes a session misbehaves: a skill fires when it shouldn't, stays silent when it should, or the agent ignores its plan, repeats work, or burns more tokens than you'd expect. Ask your coding agent to "figure out what went wrong with superpowers in this session" and it will invoke the **diagnosing-superpowers** skill. To examine an earlier session, name it: "figure out what went wrong with superpowers in session `<id>`".
 
-The skill reads the session transcript, reports what happened with line-level evidence, and, if you want, packages a scrubbed bundle for a bug report.
+The skill reads the session transcript, reports what happened with line-level evidence, and, if you want, proposes changes to the skills involved.
 
 ## Community
 
@@ -347,7 +347,7 @@ Superpowers is built by [Jesse Vincent](https://blog.fsck.com) and the rest of t
 **Debugging**
 - **systematic-debugging** - 4-phase root cause process (includes root-cause-tracing, defense-in-depth, condition-based-waiting techniques)
 - **verification-before-completion** - Ensure it's actually fixed
-- **diagnosing-superpowers** - Work out what went wrong in a session, with evidence; export a scrubbed bundle or file an issue
+- **diagnosing-superpowers** - Work out what went wrong in a session, with evidence; propose skill changes
 
 **Collaboration** 
 - **brainstorming** - Drawing out intent before building

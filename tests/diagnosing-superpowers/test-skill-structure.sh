@@ -78,10 +78,8 @@ fi
 
 # --- expected files -------------------------------------------------------
 expected_files=(
-  references/redaction-policy.md
   references/session-discovery.md
   references/context-safety.md
-  references/github-issues.md
   prompts/analyst-common.md
   prompts/skill-timeline.md
   prompts/plan-adherence.md
@@ -90,13 +88,9 @@ expected_files=(
   prompts/quality-evidence.md
   prompts/request-conflicts.md
   prompts/cost-and-time.md
-  prompts/scrub.md
-  prompts/scrub-audit.md
   prompts/similar-session.md
   templates/case.md
   templates/report.md
-  templates/bundle-README.md
-  templates/issue.md
 )
 for rel in "${expected_files[@]}"; do
   if [ -f "$SKILL_DIR/$rel" ]; then
@@ -108,6 +102,12 @@ done
 
 # --- removed harness recipes stay removed --------------------------------
 removed_files=(
+  references/github-issues.md
+  references/redaction-policy.md
+  prompts/scrub.md
+  prompts/scrub-audit.md
+  templates/bundle-README.md
+  templates/issue.md
   references/claude-code-sessions.md
   references/codex-sessions.md
   references/other-harnesses.md

@@ -66,8 +66,8 @@ A dimension with nothing to report says `none found — checked: <what was check
 
 not indicated | possible | likely
 
-Evidence lines: <path:line list>. This section states involvement only. It
-does not name a defect and does not propose a change.
+Evidence lines: <path:line list>. This section states involvement only;
+proposals, if any, come after the report (SKILL.md step 5).
 
 ## 8. Coverage notes (REQUIRED)
 

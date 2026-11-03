@@ -9,7 +9,6 @@ Created: <ISO timestamp>
 expected, what happened, and the observable that matters: wall-clock,
 tokens, repeated actions, a specific unexpected action.>
 
-Goal is a superpowers bug report: yes | no
 
 ## Sessions
 
