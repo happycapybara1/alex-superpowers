@@ -1,6 +1,6 @@
 ---
 name: receiving-code-review
-description: Use when receiving code review feedback, before implementing suggestions, especially if feedback seems unclear or technically questionable - requires technical rigor and verification, not performative agreement or blind implementation
+description: Use when receiving code review feedback (from your human partner, a PR, or a reviewer subagent), before implementing any of it, especially when an item seems unclear or wrong
 ---
 
 # Code Review Reception
@@ -21,13 +21,13 @@ WHEN receiving code review feedback:
 3. VERIFY: Check against codebase reality
 4. EVALUATE: Technically sound for THIS codebase?
 5. RESPOND: Technical acknowledgment or reasoned pushback
-6. IMPLEMENT: One item at a time, test each
+6. IMPLEMENT: One item at a time; run the affected tests after each, the full suite once at the end
 ```
 
 ## Forbidden Responses
 
 **NEVER:**
-- "You're absolutely right!" (explicit instruction-file violation)
+- "You're absolutely right!"
 - "Great point!" / "Excellent feedback!" (performative)
 - "Let me implement that now" (before verification)
 
@@ -83,7 +83,7 @@ IF conflicts with your human partner's prior decisions:
   Stop and discuss with your human partner first
 ```
 
-**your human partner's rule:** "External feedback - be skeptical, but check carefully"
+**Rule:** External feedback: be skeptical, but check carefully.
 
 ## YAGNI Check for "Professional" Features
 
@@ -95,7 +95,7 @@ IF reviewer suggests "implementing properly":
   IF used: Then implement properly
 ```
 
-**your human partner's rule:** "You and reviewer both report to me. If we don't need this feature, don't add it."
+**Rule:** You and the reviewer both report to your human partner. If the feature isn't needed, don't add it.
 
 ## Implementation Order
 
@@ -106,8 +106,8 @@ FOR multi-item feedback:
      - Blocking issues (breaks, security)
      - Simple fixes (typos, imports)
      - Complex fixes (refactoring, logic)
-  3. Test each fix individually
-  4. Verify no regressions
+  3. Run the affected tests after each fix
+  4. Run the full suite once at the end to check for regressions
 ```
 
 ## When To Push Back
@@ -167,7 +167,7 @@ State the correction factually and move on.
 |---------|-----|
 | Performative agreement | State requirement or just act |
 | Blind implementation | Verify against codebase first |
-| Batch without testing | One at a time, test each |
+| Batch without testing | One at a time, affected tests after each, full suite at the end |
 | Assuming reviewer is right | Check if breaks things |
 | Avoiding pushback | Technical correctness > comfort |
 | Partial implementation | Clarify all items first |
@@ -191,13 +191,6 @@ Reviewer: "Remove legacy code"
 ```
 Reviewer: "Implement proper metrics tracking with database, date filters, CSV export"
 ✅ "Grepped codebase - nothing calls this endpoint. Remove it (YAGNI)? Or is there usage I'm missing?"
-```
-
-**Unclear Item (Good):**
-```
-your human partner: "Fix items 1-6"
-You understand 1,2,3,6. Unclear on 4,5.
-✅ "Understand 1,2,3,6. Need clarification on 4 and 5 before implementing."
 ```
 
 ## GitHub Thread Replies
