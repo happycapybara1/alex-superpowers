@@ -41,6 +41,8 @@ This determines which menu to show and how cleanup works:
 | `GIT_DIR != GIT_COMMON`, named branch | Standard 3 options | Provenance-based (see Step 6) |
 | `GIT_DIR != GIT_COMMON`, detached HEAD | Reduced 2 options (no merge) | Externally managed — leave in place |
 
+**Cloud or container session:** anything that stays local vanishes when the container is reclaimed. Use the cloud menu in Step 4.
+
 ## Step 3: Determine Base Branch
 
 The base branch is whatever this work forked from — usually named in the
@@ -62,6 +64,17 @@ Implementation complete. What would you like to do?
 Which option?
 ```
 
+**Cloud or container session — present these 2 options:**
+
+```
+Implementation complete. This session's machine is temporary, so the work needs to be pushed.
+
+1. Push and create a Pull Request
+2. Push the branch only (I'll handle it later)
+
+Which option?
+```
+
 **Detached HEAD — present exactly these 2 options:**
 
 ```
@@ -73,8 +86,8 @@ Implementation complete. You're on a detached HEAD (externally managed workspace
 Which option?
 ```
 
-Present the menu exactly as written — concise, with every option coming
-from the list above. Discarding the work happens only in response to your
+Present the menu as written — concise, with every option coming from the
+list above. You may open it with one line: "Recommended: <N> — <reason>". Discarding the work happens only in response to your
 human partner explicitly asking for it (see "If your human partner asks to
 discard the work" below). Wait for their answer; the integration decision
 is theirs.
@@ -90,7 +103,7 @@ cd "$MAIN_ROOT"
 
 # Merge first — verify success before removing anything
 git checkout <base-branch>
-git pull
+git pull --ff-only
 git merge <feature-branch>
 
 # Verify tests on merged result
@@ -164,8 +177,9 @@ Step 2, from before that directory change.
 
 **If `GIT_DIR == GIT_COMMON`:** Normal repo, no worktree to clean up. Done.
 
-**If `WORKTREE_PATH` is under `.worktrees/` or `worktrees/`:** Superpowers
-created this worktree — we own cleanup:
+**If `WORKTREE_PATH` is under `.worktrees/`, `worktrees/`, or the worktree
+directory your instructions declare:** Superpowers created this worktree —
+we own cleanup:
 
 ```bash
 git worktree remove "$WORKTREE_PATH"
@@ -196,16 +210,10 @@ Which?
 Carry out the choice, then remove the worktree.
 
 **Otherwise:** The host environment owns this workspace — leave it in
-place. If your platform provides a workspace-exit tool, use it.
-
-## Quick Reference
-
-| Option | Merge | Push | Keep Worktree | Cleanup Branch |
-|--------|-------|------|---------------|----------------|
-| 1. Merge locally | yes | - | - | yes |
-| 2. Create PR | - | yes | yes | - |
-| 3. Keep as-is | - | - | yes | - |
-| Discard (explicit request only) | - | - | - | yes (force) |
+place. If your platform provides a workspace-exit tool, use it. Claude
+Code: a worktree from `EnterWorktree` lives under `.claude/worktrees/`;
+after Option 1 or a confirmed discard, call `ExitWorktree` with `remove`.
+It deletes the branch too, so skip `git branch -d`/`-D`.
 
 ## Common Rationalizations
 
@@ -216,7 +224,7 @@ place. If your platform provides a workspace-exit tool, use it.
 | "They seem done with this feature — I'll offer to discard it" | The menu is complete as written. Discard happens only when your human partner asks for it in so many words. |
 | "'Yeah, get rid of it' counts as confirmation" | Only the typed word `discard` authorizes deletion. |
 | "The PR is up, so the worktree is clutter now" | PR feedback gets fixed in that worktree. It stays until the work lands. |
-| "This other worktree looks stale — I'll clean it too" | Clean up only worktrees under `.worktrees/` or `worktrees/`. Everything else belongs to the host. |
+| "This other worktree looks stale — I'll clean it too" | Clean up only worktrees under `.worktrees/`, `worktrees/`, or your declared worktree directory. Everything else belongs to the host. |
 | "Removal refused — `--force` is just finishing the cleanup" | The refusal means files exist only in that worktree. `--force` destroys them permanently. Show your human partner and ask. |
 | "The merged-result failure is probably flaky" | A failing merged result stops everything. Branch and worktree stay put while you investigate. |
 | "The base branch is obviously main" | Confirm the fork point or ask. Merging into the wrong base is expensive to undo. |
