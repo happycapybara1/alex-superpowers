@@ -27,7 +27,8 @@ Subagent (general-purpose):
     - Dependencies or assumptions
     - Anything unclear in the task description
 
-    **Ask them now.** Raise any concerns before starting work.
+    **Ask them now**, before starting work: return NEEDS_CONTEXT with your
+    questions. You'll be re-dispatched with the answers.
 
     ## Your Job
 
@@ -41,8 +42,9 @@ Subagent (general-purpose):
 
     Work from: [directory]
 
-    **While you work:** If you encounter something unexpected or unclear, **ask questions**.
-    It's always OK to pause and clarify. Don't guess or make assumptions.
+    **While you work:** If you hit something unexpected or unclear, don't guess
+    or make assumptions: stop and return NEEDS_CONTEXT with your questions.
+    You'll be re-dispatched with the answers.
 
     While iterating, run the focused test for what you're changing; run the
     full suite once before committing, not after every edit.

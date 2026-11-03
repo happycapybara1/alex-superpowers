@@ -140,6 +140,20 @@ PLAN
         echo "    got: $brief_path"
     fi
 
+    # --- task-brief ends a task at the next heading of the same or higher level ---
+    local tb_dir
+    tb_dir="$(mktemp -d)"
+    printf '# Plan\n\n### Task 1: one\nStep A\n\n### Task 2: two\n#### Step 1\nStep B\n\n## Final checklist\n- not part of any task\n' > "$tb_dir/plan.md"
+    bash "$SDD_SCRIPTS/task-brief" "$tb_dir/plan.md" 2 "$tb_dir/brief.md" >/dev/null
+    if grep -q 'Step B' "$tb_dir/brief.md" && grep -q '^#### Step 1' "$tb_dir/brief.md" \
+        && ! grep -q 'Final checklist' "$tb_dir/brief.md"; then
+        pass "task-brief stops the last task at the plan's closing sections"
+    else
+        fail "task-brief stops the last task at the plan's closing sections"
+        sed 's/^/    /' "$tb_dir/brief.md"
+    fi
+    rm -rf "$tb_dir"
+
     # --- review-package takes the plan first and lands in its directory ---
     local git_id=(-c user.email=t@example.com -c user.name=t -c commit.gpgsign=false)
     ( cd "$repo" \
