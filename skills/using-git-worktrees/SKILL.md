@@ -1,6 +1,6 @@
 ---
 name: using-git-worktrees
-description: Use when starting feature work that needs isolation from current workspace or before executing implementation plans - ensures an isolated workspace exists via native tools or git worktree fallback
+description: Use when starting feature work that needs isolation from the current workspace, or before executing an implementation plan
 ---
 
 # Using Git Worktrees
@@ -36,6 +36,8 @@ Report with branch state:
 
 **If `GIT_DIR == GIT_COMMON` (or in a submodule):** You are in a normal repo checkout.
 
+**Disposable checkout:** in a cloud or container session working on a branch other than the default branch, the checkout is already disposable. Treat it as isolated and skip to Step 2 without asking.
+
 Has the user already indicated their worktree preference in your instructions? If not, ask for consent before creating a worktree:
 
 > "Would you like me to set up an isolated worktree? It protects your current branch from changes."
@@ -53,6 +55,8 @@ The user has asked for an isolated workspace (Step 0 consent). Do you already ha
 Native tools handle directory placement, branch creation, and cleanup automatically. Using `git worktree add` when you have a native tool creates phantom state your harness can't see or manage.
 
 Only proceed to Step 1b if you have no native worktree tool available.
+
+**Base of a new worktree:** Claude Code's `EnterWorktree` branches from `origin/<default-branch>` unless the `worktree.baseRef` setting is `head`. If the work needs local commits (`git log origin/<default-branch>..HEAD` shows them), create the worktree with Step 1b, then enter it with `EnterWorktree` and its `path`. Uncommitted files, such as a new design doc or plan, are in no new worktree; refer to them by absolute path.
 
 ### 1b. Git Worktree Fallback
 
@@ -81,7 +85,7 @@ Follow this priority order. Explicit user preference always beats observed files
 git check-ignore -q .worktrees 2>/dev/null || git check-ignore -q worktrees 2>/dev/null
 ```
 
-**If NOT ignored:** Add to .gitignore, commit the change, then proceed.
+**If NOT ignored:** Add it to `.git/info/exclude` (a local-only ignore, nothing to commit), then proceed.
 
 **Why critical:** Prevents accidentally committing worktree contents to repository.
 
@@ -99,22 +103,20 @@ cd "$path"
 
 ## Step 2: Project Setup
 
-Auto-detect and run appropriate setup:
+Install dependencies with the tool the lockfile names:
 
-```bash
-# Node.js
-if [ -f package.json ]; then npm install; fi
+| Lockfile | Command |
+|----------|---------|
+| `package-lock.json` | `npm ci` |
+| `pnpm-lock.yaml` | `pnpm install` |
+| `yarn.lock` | `yarn install` |
+| `uv.lock` | `uv sync` |
+| `poetry.lock` | `poetry install` |
+| `requirements.txt` | `pip install -r requirements.txt` |
+| `go.sum` | `go mod download` |
+| `Cargo.lock` | `cargo fetch` |
 
-# Rust
-if [ -f Cargo.toml ]; then cargo build; fi
-
-# Python
-if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-if [ -f pyproject.toml ]; then poetry install; fi
-
-# Go
-if [ -f go.mod ]; then go mod download; fi
-```
+No lockfile: skip, unless the project's README names a setup command.
 
 ## Step 3: Verify Clean Baseline
 
@@ -136,23 +138,6 @@ Worktree ready at <full-path>
 Tests passing (<N> tests, 0 failures)
 Ready to implement <feature-name>
 ```
-
-## Quick Reference
-
-| Situation | Action |
-|-----------|--------|
-| Already in linked worktree | Skip creation (Step 0) |
-| In a submodule | Treat as normal repo (Step 0 guard) |
-| Native worktree tool available | Use it (Step 1a) |
-| No native tool | Git worktree fallback (Step 1b) |
-| `.worktrees/` exists | Use it (verify ignored) |
-| `worktrees/` exists | Use it (verify ignored) |
-| Both exist | Use `.worktrees/` |
-| Neither exists | Check instruction file, then default `.worktrees/` |
-| Directory not ignored | Add to .gitignore + commit |
-| Permission error on create | Sandbox fallback, work in place |
-| Tests fail during baseline | Report failures + ask |
-| No package.json/Cargo.toml | Skip dependency install |
 
 ## Common Rationalizations
 
