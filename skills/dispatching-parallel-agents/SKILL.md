@@ -1,13 +1,11 @@
 ---
 name: dispatching-parallel-agents
-description: Use when facing 2+ independent tasks that can be worked on without shared state or sequential dependencies
+description: Use when 2+ independent problems (unrelated test failures, bugs, investigations) can be worked on at once with no shared files or state. Not for executing a written plan.
 ---
 
 # Dispatching Parallel Agents
 
 ## Overview
-
-You delegate tasks to specialized agents with isolated context. By precisely crafting their instructions and context, you ensure they stay focused and succeed at their task. They should never inherit your session's context or history — you construct exactly what they need. This also preserves your own context for coordination work.
 
 When you have multiple unrelated failures (different test files, different subsystems, different bugs), investigating them sequentially wastes time. Each investigation is independent and can happen in parallel.
 
@@ -15,34 +13,13 @@ When you have multiple unrelated failures (different test files, different subsy
 
 ## When to Use
 
-```dot
-digraph when_to_use {
-    "Multiple failures?" [shape=diamond];
-    "Are they independent?" [shape=diamond];
-    "Single agent investigates all" [shape=box];
-    "One agent per problem domain" [shape=box];
-    "Can they work in parallel?" [shape=diamond];
-    "Sequential agents" [shape=box];
-    "Parallel dispatch" [shape=box];
-
-    "Multiple failures?" -> "Are they independent?" [label="yes"];
-    "Are they independent?" -> "Single agent investigates all" [label="no - related"];
-    "Are they independent?" -> "Can they work in parallel?" [label="yes"];
-    "Can they work in parallel?" -> "Parallel dispatch" [label="yes"];
-    "Can they work in parallel?" -> "Sequential agents" [label="no - shared state"];
-}
-```
-
 **Use when:**
-- 3+ test files failing with different root causes
+- 2+ test files failing with different root causes
 - Multiple subsystems broken independently
 - Each problem can be understood without context from others
 - No shared state between investigations
 
-**Don't use when:**
-- Failures are related (fix one might fix others)
-- Need to understand full system state
-- Agents would interfere with each other
+For when not to, see When NOT to Use below.
 
 ## The Pattern
 
@@ -82,6 +59,7 @@ When agents return:
 - Read each summary
 - Verify fixes don't conflict
 - Run full test suite
+- Spot check: agents can make systematic errors
 - Integrate all changes
 
 ## Agent Prompt Structure
@@ -132,6 +110,8 @@ Return: Summary of what you found and what you fixed.
 **Need full context:** Understanding requires seeing entire system
 **Exploratory debugging:** You don't know what's broken yet
 **Shared state:** Agents would interfere (editing same files, using same resources)
+**One checkout:** Agents that edit files or run the test suite concurrently in the same checkout collide. Give each its own worktree, or have them investigate and report while you apply the fixes.
+**A written plan:** Execute it with superpowers:subagent-driven-development, which runs implementers one at a time.
 
 ## Real Example from Session
 
@@ -157,11 +137,3 @@ Agent 3 → Fix tool-approval-race-conditions.test.ts
 - Agent 3: Added wait for async tool execution to complete
 
 **Integration:** All fixes independent, no conflicts, full suite green
-
-## Verification
-
-After agents return:
-1. **Review each summary** - Understand what changed
-2. **Check for conflicts** - Did agents edit same code?
-3. **Run full suite** - Verify all fixes work together
-4. **Spot check** - Agents can make systematic errors
