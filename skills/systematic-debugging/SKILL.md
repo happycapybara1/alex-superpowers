@@ -43,7 +43,7 @@ Use for ANY technical issue:
 
 ## The Four Phases
 
-You MUST complete each phase before proceeding to the next.
+You MUST complete each phase before proceeding to the next. Phases can be short: when the error states the cause outright, Phase 1 is reading it and confirming.
 
 ### Phase 1: Root Cause Investigation
 
@@ -86,21 +86,10 @@ You MUST complete each phase before proceeding to the next.
 
    **Example (multi-layer system):**
    ```bash
-   # Layer 1: Workflow
-   echo "=== Secrets available in workflow: ==="
-   echo "IDENTITY: $([ -n "${IDENTITY:-}" ] && echo SET || echo UNSET)"
-
-   # Layer 2: Build script
-   echo "=== Env vars in build script: ==="
-   printenv IDENTITY >/dev/null 2>&1 && echo "IDENTITY in environment" || echo "IDENTITY not in environment"
-
-   # Layer 3: Signing script
-   echo "=== Keychain state: ==="
-   security list-keychains
-   security find-identity -v
-
-   # Layer 4: Actual signing
-   codesign --sign "$IDENTITY" --verbose=4 "$APP"
+   # One line at each boundary, run once: which layer loses the value?
+   echo "CI step:  API_TOKEN=$([ -n "${API_TOKEN:-}" ] && echo SET || echo UNSET)"
+   echo "build.sh: API_TOKEN=$([ -n "${API_TOKEN:-}" ] && echo SET || echo UNSET)"
+   echo "deploy:   API_TOKEN=$([ -n "${API_TOKEN:-}" ] && echo SET || echo UNSET)"
    ```
 
    **This reveals:** Which layer fails (secrets → workflow ✓, workflow → build ✗)
@@ -228,7 +217,7 @@ If you catch yourself thinking:
 
 **ALL of these mean: STOP. Return to Phase 1.**
 
-**If 3+ fixes failed:** Question the architecture (see Phase 4.5)
+**If 3+ fixes failed:** Question the architecture (Phase 4, step 5)
 
 ## your human partner's Signals You're Doing It Wrong
 
@@ -246,7 +235,7 @@ If you catch yourself thinking:
 | Excuse | Reality |
 |--------|---------|
 | "Issue is simple, don't need process" | Simple issues have root causes too. Process is fast for simple bugs. |
-| "Emergency, no time for process" | Systematic debugging is FASTER than guess-and-check thrashing. |
+| "Emergency, no time for process" | Production down: mitigate first (roll back, turn the feature off) and call it a mitigation, not a fix. Then Phase 1; systematic debugging is still faster than guess-and-check thrashing. |
 | "Just try this first, then investigate" | First fix sets the pattern. Do it right from the start. |
 | "I'll write test after confirming fix works" | Untested fixes don't stick. Test first proves it. |
 | "Multiple fixes at once saves time" | Can't isolate what worked. Causes new bugs. |
@@ -272,7 +261,7 @@ If systematic investigation reveals issue is truly environmental, timing-depende
 3. Implement appropriate handling (retry, timeout, error message)
 4. Add monitoring/logging for future investigation
 
-**But:** 95% of "no root cause" cases are incomplete investigation.
+**But:** most "no root cause" cases are incomplete investigation.
 
 ## Supporting Techniques
 

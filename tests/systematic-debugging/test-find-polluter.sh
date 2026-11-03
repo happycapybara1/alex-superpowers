@@ -82,6 +82,23 @@ OUTPUT="$(run_polluter 'nomatch/**/*.test.ts')"
 assert_contains "$OUTPUT" "Found 0 test files" "empty result counts as 0, not 1"
 assert_contains "$OUTPUT" "No polluter found" "empty result exits via the clean path"
 
+echo "Test: pollution that already exists is refused, not reported clean"
+setup_project
+touch "$PROJECT/pollution.marker"
+STATUS=0
+OUTPUT="$(cd "$PROJECT" && PATH="$PROJECT/bin:$PATH" "$SCRIPT_UNDER_TEST" 'pollution.marker' 'src/**/*.test.ts' 2>&1)" || STATUS=$?
+assert_contains "$OUTPUT" "already exists" "pre-existing pollution names the problem"
+if [ "$STATUS" -eq 2 ]; then pass "pre-existing pollution exits 2"; else fail "pre-existing pollution exits 2 (got $STATUS)"; fi
+case "$OUTPUT" in *"No polluter found"*) fail "pre-existing pollution must not claim a clean run" ;; *) pass "pre-existing pollution does not claim a clean run" ;; esac
+
+echo "Test: a custom test command replaces npm test"
+setup_project
+printf '#!/usr/bin/env bash\nexit 0\n' > "$PROJECT/bin/npm"
+printf '#!/usr/bin/env bash\n[ "$1" = run ] && touch pollution.marker\n' > "$PROJECT/bin/vitest"
+chmod +x "$PROJECT/bin/npm" "$PROJECT/bin/vitest"
+OUTPUT="$(cd "$PROJECT" && rm -f pollution.marker && PATH="$PROJECT/bin:$PATH" "$SCRIPT_UNDER_TEST" 'pollution.marker' 'src/**/*.test.ts' 'vitest run' 2>&1)" || true
+assert_contains "$OUTPUT" "FOUND POLLUTER" "third argument runs the given command with its own arguments"
+
 echo ""
 if [ "$FAILURES" -gt 0 ]; then
   echo "$FAILURES test(s) failed"
