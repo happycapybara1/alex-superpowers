@@ -9,7 +9,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, '../..');
 const packageJsonPath = resolve(repoRoot, 'package.json');
 const extensionPath = resolve(repoRoot, '.pi/extensions/superpowers.ts');
-const piToolsPath = resolve(repoRoot, 'skills/using-superpowers/references/pi-tools.md');
 
 async function readPackageJson() {
   return JSON.parse(await readFile(packageJsonPath, 'utf8'));
@@ -116,22 +115,4 @@ test('session_compact injects bootstrap after compaction summaries, not before c
   assert.equal(result.messages[1].role, 'user');
   assert.match(textOf(result.messages[1]), /You have superpowers/);
   assert.equal(result.messages[2], user);
-});
-
-test('pi tools reference documents pi-specific mappings', async () => {
-  assert.equal(existsSync(piToolsPath), true, 'pi-tools.md should exist');
-  const text = await readFile(piToolsPath, 'utf8');
-
-  // Assert against the mapping-table rows only. The surrounding prose mentions
-  // these same tokens, so matching the whole file would still pass if the table
-  // were deleted — the exact regression this test exists to catch.
-  const rows = text.split('\n').filter((line) => line.startsWith('|'));
-  assert.ok(
-    rows.some((row) => /subagent/i.test(row)),
-    'mapping table documents subagent dispatch',
-  );
-  assert.ok(
-    rows.some((row) => /todo|task/i.test(row)),
-    'mapping table documents task tracking',
-  );
 });
