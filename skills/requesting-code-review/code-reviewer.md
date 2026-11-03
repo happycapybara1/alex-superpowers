@@ -30,6 +30,9 @@ Subagent (general-purpose):
     git diff [BASE_SHA]..[HEAD_SHA]
     ```
 
+    [REVIEW_PACKAGE: if given, read this file instead; it holds the commit
+    list, stat summary, and full diff for this range]
+
     ## The spec is a vision document
 
     The spec says what the software must do. It does not enumerate every
@@ -156,6 +159,7 @@ Subagent (general-purpose):
 - `[PLAN_OR_REQUIREMENTS]` — what it should do (plan file path, task text, or requirements)
 - `[BASE_SHA]` — starting commit
 - `[HEAD_SHA]` — ending commit
+- `[REVIEW_PACKAGE]` — optional: review package path; drop the line when there is none
 
 **Reviewer returns:** Strengths, Issues (Critical / Important / Minor), Recommendations, Assessment
 
