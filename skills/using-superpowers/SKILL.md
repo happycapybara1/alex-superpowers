@@ -11,7 +11,7 @@ If you were dispatched as a subagent to execute a specific task, ignore this ski
 
 **If a skill plausibly applies, invoke it before acting**: before any response or action, including clarifying questions, exploring the codebase, or checking files. If it turns out not to fit the situation, drop it.
 
-Then follow the skill. If it has a checklist, create a todo per item.
+Then follow the skill, and name it in one short line near the top of your reply. If it has a checklist, create a todo per item.
 
 ## Skill Priority
 
