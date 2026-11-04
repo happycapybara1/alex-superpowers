@@ -126,7 +126,7 @@ Wait for that exact confirmation. Then `cd` to the main repo root as in Option 1
 
 ## Step 6: Cleanup Workspace
 
-**Runs for Option 1 and confirmed discards only.** Both have already moved to the main repo root (removal must run from outside the worktree); use the values captured in Step 2.
+**Runs for Option 1 and confirmed discards only.** Both callers have already moved to the main repo root (removal must run from outside the worktree); use the values captured in Step 2.
 
 **If `GIT_DIR == GIT_COMMON`:** normal repo, nothing to clean up.
 
