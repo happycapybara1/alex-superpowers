@@ -50,13 +50,13 @@ Installation differs by harness. If you use more than one, install Superpowers s
 - Register this repository as a marketplace:
 
   ```bash
-  /plugin marketplace add happycapybara1/superpowers
+  /plugin marketplace add happycapybara1/alex-superpowers
   ```
 
 - Install the plugin from it:
 
   ```bash
-  /plugin install superpowers@superpowers-dev
+  /plugin install alex-superpowers@alex-superpowers
   ```
 
 ### Codex
@@ -64,8 +64,8 @@ Installation differs by harness. If you use more than one, install Superpowers s
 - Register this repository as a marketplace and add the plugin:
 
   ```bash
-  codex plugin marketplace add happycapybara1/superpowers --ref main
-  codex plugin add superpowers@superpowers-dev
+  codex plugin marketplace add happycapybara1/alex-superpowers --ref main
+  codex plugin add alex-superpowers@alex-superpowers
   ```
 
 - The same install covers the Codex app: restart the app afterwards.
@@ -75,7 +75,7 @@ Installation differs by harness. If you use more than one, install Superpowers s
 - Install the extension:
 
   ```bash
-  gemini extensions install https://github.com/happycapybara1/superpowers
+  gemini extensions install https://github.com/happycapybara1/alex-superpowers
   ```
 
 - Update later:
@@ -89,13 +89,13 @@ Installation differs by harness. If you use more than one, install Superpowers s
 - Register this repository as a marketplace:
 
   ```bash
-  copilot plugin marketplace add happycapybara1/superpowers
+  copilot plugin marketplace add happycapybara1/alex-superpowers
   ```
 
 - Install the plugin:
 
   ```bash
-  copilot plugin install superpowers@superpowers-dev
+  copilot plugin install alex-superpowers@alex-superpowers
   ```
 
 ### OpenCode
@@ -106,7 +106,7 @@ already use it in another harness.
 - Tell OpenCode:
 
   ```
-  Fetch and follow instructions from https://raw.githubusercontent.com/happycapybara1/superpowers/refs/heads/main/.opencode/INSTALL.md
+  Fetch and follow instructions from https://raw.githubusercontent.com/happycapybara1/alex-superpowers/refs/heads/main/.opencode/INSTALL.md
   ```
 
 - Detailed docs: [docs/README.opencode.md](docs/README.opencode.md)
@@ -116,7 +116,7 @@ already use it in another harness.
 Install Superpowers as a Hermes plugin from this repository:
 
 ```bash
-hermes plugins install happycapybara1/superpowers --enable
+hermes plugins install happycapybara1/alex-superpowers --enable
 ```
 
 Restart any active Hermes sessions after installing. Note: Hermes has no

@@ -12,7 +12,7 @@ Use the existing V1 plugin configuration:
 
 ```json
 {
-  "plugin": ["superpowers@git+https://github.com/happycapybara1/superpowers.git"]
+  "plugin": ["alex-superpowers@git+https://github.com/happycapybara1/alex-superpowers.git"]
 }
 ```
 
@@ -22,7 +22,7 @@ Use the V2 plugin configuration:
 
 ```json
 {
-  "plugins": ["superpowers@git+https://github.com/happycapybara1/superpowers.git"]
+  "plugins": ["alex-superpowers@git+https://github.com/happycapybara1/alex-superpowers.git"]
 }
 ```
 
@@ -111,7 +111,7 @@ V1 `plugin` key and the V2 `plugins` key):
 
 ```json
 {
-  "plugin": ["superpowers@git+https://github.com/happycapybara1/superpowers.git#main"]
+  "plugin": ["alex-superpowers@git+https://github.com/happycapybara1/alex-superpowers.git#main"]
 }
 ```
 
@@ -202,7 +202,7 @@ the plugin, try installing with system npm and pointing OpenCode at the local
 package:
 
 ```powershell
-npm install superpowers@git+https://github.com/happycapybara1/superpowers.git --prefix "$HOME\.config\opencode"
+npm install alex-superpowers@git+https://github.com/happycapybara1/alex-superpowers.git --prefix "$HOME\.config\opencode"
 ```
 
 Then use the absolute path of the installed package in `opencode.json` for your
@@ -238,7 +238,7 @@ package name, not a local directory.
 
 ## Getting Help
 
-- Report issues: https://github.com/happycapybara1/superpowers/issues
-- Main documentation: https://github.com/happycapybara1/superpowers
+- Report issues: https://github.com/happycapybara1/alex-superpowers/issues
+- Main documentation: https://github.com/happycapybara1/alex-superpowers
 - OpenCode V2 docs: https://opencode.ai/v2/docs/
 - OpenCode V1 docs: https://opencode.ai/docs/

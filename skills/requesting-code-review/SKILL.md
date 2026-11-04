@@ -37,7 +37,7 @@ HEAD_SHA=$(git rev-parse HEAD)
 - Fix Critical issues immediately
 - Fix Important issues before proceeding
 - Note Minor issues for later
-- Handle the findings with superpowers:receiving-code-review, including when the reviewer is wrong
+- Handle the findings with alex-superpowers:receiving-code-review, including when the reviewer is wrong
 
 ## Common Rationalizations
 

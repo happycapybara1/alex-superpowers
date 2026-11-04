@@ -13,14 +13,14 @@ If you were dispatched as a subagent to execute a specific task, ignore this ski
 
 Then follow the skill, and name it in one short line near the top of your reply. If it has a checklist, create a todo per item.
 
-**Evidence before claims:** before saying work is done, fixed, or passing, run the command that proves it and show the result (details: superpowers:verification-before-completion).
+**Evidence before claims:** before saying work is done, fixed, or passing, run the command that proves it and show the result (details: alex-superpowers:verification-before-completion).
 
 ## Skill Priority
 
 When multiple skills apply, process skills come first — they set the approach, then implementation skills (frontend-design, etc.) carry it out. Brainstorming and systematic-debugging are Superpowers' most common process skills, but the rule holds for any of them.
 
-- "Let's build X" → superpowers:brainstorming first, then implementation skills.
-- "Fix this bug" → superpowers:systematic-debugging first, then domain skills.
+- "Let's build X" → alex-superpowers:brainstorming first, then implementation skills.
+- "Fix this bug" → alex-superpowers:systematic-debugging first, then domain skills.
 
 ## Red Flags
 

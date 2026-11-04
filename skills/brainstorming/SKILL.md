@@ -198,9 +198,9 @@ stays labeled throwaway, and keeping what it produced is a new request
 that comes back through this gate.
 
 After the design doc is approved, the next step for a project is the
-plan: invoke superpowers:writing-plans and no other skill. For a small
+plan: invoke alex-superpowers:writing-plans and no other skill. For a small
 change, implement the approved short design with
-superpowers:test-driven-development.
+alex-superpowers:test-driven-development.
 </HARD-GATE>
 
 ## Red Flags

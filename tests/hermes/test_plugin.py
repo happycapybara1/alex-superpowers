@@ -14,7 +14,7 @@ _PLUGIN_DIR = os.path.abspath(
 )
 sys.path.insert(0, _PLUGIN_DIR)
 
-BOOTSTRAP_MARKER = "superpowers:using-superpowers bootstrap for hermes"
+BOOTSTRAP_MARKER = "alex-superpowers:using-superpowers bootstrap for hermes"
 
 
 def _load_plugin():

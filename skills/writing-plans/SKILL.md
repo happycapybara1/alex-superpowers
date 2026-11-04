@@ -39,7 +39,7 @@ Each step is one action with a checkable result: write the failing test; run it 
 ```markdown
 # [Feature Name] Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use the execution skill chosen at handoff (superpowers:subagent-driven-development or superpowers:executing-plans) to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use the execution skill chosen at handoff (alex-superpowers:subagent-driven-development or alex-superpowers:executing-plans) to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** [One sentence describing what this builds]
 
@@ -158,6 +158,6 @@ After saving and self-reviewing the plan, link it for your human partner and wai
 
 **"Plan complete and saved to `docs/superpowers/plans/<filename>.md`. Please review the plan. Does it capture what you want?"**
 
-**If Subagent-driven chosen:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development
+**If Subagent-driven chosen:** REQUIRED SUB-SKILL: Use alex-superpowers:subagent-driven-development
 
-**If Inline chosen:** REQUIRED SUB-SKILL: Use superpowers:executing-plans
+**If Inline chosen:** REQUIRED SUB-SKILL: Use alex-superpowers:executing-plans

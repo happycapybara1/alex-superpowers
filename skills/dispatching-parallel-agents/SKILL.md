@@ -77,7 +77,7 @@ Return: Summary of what you found and what you fixed.
 - **Exploratory debugging:** you don't know what's broken yet
 - **Shared state:** agents would interfere (editing same files, using same resources)
 - **One checkout:** agents that edit files or run the test suite concurrently in the same checkout collide. Give each its own worktree, or have them investigate and report while you apply the fixes.
-- **A written plan:** execute it with superpowers:subagent-driven-development, which runs implementers one at a time.
+- **A written plan:** execute it with alex-superpowers:subagent-driven-development, which runs implementers one at a time.
 
 ## Real Example from Session
 

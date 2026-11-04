@@ -98,13 +98,13 @@ Phase 1 is done when you understand WHAT is broken and WHY.
 
 1. **Create Failing Test Case** - Simplest possible reproduction (an
    automated test, or a one-off script if there's no framework), written
-   with `superpowers:test-driven-development`. MUST have before fixing.
+   with `alex-superpowers:test-driven-development`. MUST have before fixing.
 
 2. **Implement Single Fix** - ONE change, addressing the root cause. No
    "while I'm here" improvements or bundled refactoring.
 
 3. **Verify Fix** - Test passes? No other tests broken? Issue actually
-   resolved? Use `superpowers:verification-before-completion` before
+   resolved? Use `alex-superpowers:verification-before-completion` before
    claiming success.
 
 4. **If Fix Doesn't Work** - STOP and count your fixes. Under 3: return

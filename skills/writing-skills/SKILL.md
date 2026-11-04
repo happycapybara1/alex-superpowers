@@ -13,7 +13,7 @@ description: Use when creating new skills, editing existing skills, or verifying
 
 **Core principle:** If you didn't watch an agent fail without the skill, you don't know if the skill teaches the right thing.
 
-**REQUIRED BACKGROUND:** You MUST understand superpowers:test-driven-development before using this skill; it defines the RED-GREEN-REFACTOR cycle this skill adapts.
+**REQUIRED BACKGROUND:** You MUST understand alex-superpowers:test-driven-development before using this skill; it defines the RED-GREEN-REFACTOR cycle this skill adapts.
 
 **Anthropic's guidance:** references/anthropic-best-practices.md snapshots Anthropic's skill-authoring best practices (October 2025, lightly edited since; the live page may be newer). On descriptions this skill deliberately differs: a description says only when to use the skill.
 

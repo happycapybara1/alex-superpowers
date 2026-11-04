@@ -57,7 +57,7 @@ digraph when_to_use {
 
 ## Setup
 
-Work in an isolated workspace: superpowers:using-git-worktrees creates or
+Work in an isolated workspace: alex-superpowers:using-git-worktrees creates or
 verifies one. Never start implementation on a main/master branch without
 your human partner's explicit consent.
 
@@ -283,7 +283,7 @@ When the final review is clean and its fixes are committed, delete this
 plan's workspace (`rm -rf <workspace>`) — the git history is the record
 now. Sibling directories belong to other plans; leave them alone.
 
-Use superpowers:finishing-a-development-branch.
+Use alex-superpowers:finishing-a-development-branch.
 
 ## Common Rationalizations
 

@@ -1,6 +1,6 @@
 # Bulletproofing Skills Against Rationalization
 
-Part of superpowers:writing-skills. Use it when the baseline failure is a
+Part of alex-superpowers:writing-skills. Use it when the baseline failure is a
 discipline failure: the agent knows the rule and skips it under pressure.
 
 Skills that enforce discipline (like TDD) need to resist rationalization. Agents are smart and will find loopholes when under pressure.
