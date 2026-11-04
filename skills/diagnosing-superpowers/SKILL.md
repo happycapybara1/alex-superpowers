@@ -1,6 +1,7 @@
 ---
 name: diagnosing-superpowers
 description: Use when your human partner asks why a superpowers session went wrong — repeated work, ignored plans, stumbles, poor results, a skill that didn't fire, too slow, too expensive — for this session or a past one
+disable-model-invocation: true
 ---
 
 # Diagnosing Superpowers

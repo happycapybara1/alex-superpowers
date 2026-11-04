@@ -213,22 +213,7 @@ When writing or changing any test, read [writing-good-tests.md](writing-good-tes
 | "Manual test faster" | Manual doesn't prove edge cases. You'll re-test every change. |
 | "Existing code has no tests" | You're improving it. Add tests for existing code. They pass at once, so break the code briefly to see each one fail. |
 
-## Red Flags - STOP and Start Over
-
-- Code before test
-- Test after implementation
-- Can't explain why test failed
-- Tests added "later"
-- Rationalizing "just this once"
-- "I already manually tested it"
-- "Tests after achieve the same purpose"
-- "It's about spirit not ritual"
-- "Keep as reference" or "adapt existing code"
-- "Already spent X hours, deleting is wasteful"
-- "TDD is dogmatic, I'm being pragmatic"
-- "This is different because..."
-
-**All of these mean: Delete code. Start over with TDD.**
+**Also stop** when you can't explain why a test failed, or catch yourself thinking "this is different because...". Any excuse in the table, or either of these, means: delete the code you wrote for this task and start over with TDD.
 
 ## Example: Bug Fix
 

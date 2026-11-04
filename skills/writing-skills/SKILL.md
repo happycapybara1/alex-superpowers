@@ -262,26 +262,11 @@ rationalization table, and the red-flags list.
 
 ## RED-GREEN-REFACTOR for Skills
 
-Follow the TDD cycle:
+- **RED:** run the scenario without the skill (or without the edit) and record what the agent does, its rationalizations verbatim, and which pressures triggered them.
+- **GREEN:** write the minimal skill text that addresses those specific failures, nothing for hypothetical cases. Rerun: the agent should now comply.
+- **REFACTOR:** a new rationalization gets an explicit counter; rerun until it holds.
 
-### RED: Write Failing Test (Baseline)
-
-Run pressure scenario with subagent WITHOUT the skill. Document exact behavior:
-- What choices did they make?
-- What rationalizations did they use (verbatim)?
-- Which pressures triggered violations?
-
-This is "watch the test fail" - you must see what agents naturally do before writing the skill.
-
-### GREEN: Write Minimal Skill
-
-Write skill that addresses those specific rationalizations. Don't add extra content for hypothetical cases.
-
-Run same scenarios WITH skill. Agent should now comply.
-
-### REFACTOR: Close Loopholes
-
-Agent found new rationalization? Add explicit counter. Re-test until bulletproof.
+The full method (pressure types, scenario writing, meta-testing) is in [references/testing-skills-with-subagents.md](references/testing-skills-with-subagents.md).
 
 ### Micro-Test Wording Before Full Scenarios
 
@@ -294,12 +279,6 @@ Full pressure-scenario runs are the final gate, but they are slow and expensive 
 5. **Variance is a metric.** When guidance lands, reps converge on the same shape. Five different interpretations across five reps means the wording isn't binding — tighten the form before adding words.
 
 Micro-tests verify wording; they do not replace pressure scenarios for discipline skills.
-
-**Testing methodology:** See [references/testing-skills-with-subagents.md](references/testing-skills-with-subagents.md) for the complete testing methodology:
-- How to write pressure scenarios
-- Pressure types (time, sunk cost, authority, exhaustion)
-- Plugging holes systematically
-- Meta-testing techniques
 
 ## Anti-Patterns
 
@@ -322,41 +301,20 @@ step2 [label="read file"];
 helper1, helper2, step3, pattern4
 **Why bad:** Labels should have semantic meaning
 
-## Skill Creation Checklist (TDD Adapted)
+## Skill Creation Checklist
 
-**RED Phase - Write Failing Test:**
-- [ ] Create pressure scenarios (3+ combined pressures for discipline skills)
-- [ ] Run scenarios WITHOUT skill - document baseline behavior verbatim
-- [ ] Identify patterns in rationalizations/failures
+**RED:**
+- [ ] Baseline run without the skill or edit; failures and rationalizations recorded verbatim
 
-**GREEN Phase - Write Minimal Skill:**
-- [ ] Name uses only letters, numbers, hyphens (no parentheses/special chars)
-- [ ] YAML frontmatter with required `name` and `description` fields (max 1024 chars; see [spec](https://agentskills.io/specification))
-- [ ] Description starts with "Use when..." and includes specific triggers/symptoms
-- [ ] Description written in third person
-- [ ] Keywords throughout for search (errors, symptoms, tools)
-- [ ] Clear overview with core principle
-- [ ] Address specific baseline failures identified in RED
+**GREEN:**
+- [ ] `name`: lowercase letters, numbers, hyphens; `description`: "Use when...", triggers only, third person (summary allowed only with `disable-model-invocation: true`)
 - [ ] Guidance form matches the failure type (see Match the Form to the Failure)
-- [ ] For behavior-shaping guidance: wording micro-tested against a no-guidance control (5+ reps, every flagged match read manually) — N/A for pure reference skills
-- [ ] Code inline OR link to separate file
-- [ ] One excellent example (not multi-language)
-- [ ] Run scenarios WITH skill - verify agents now comply
+- [ ] Behavior-shaping wording micro-tested against a no-guidance control (5+ reps, every flagged match read)
+- [ ] Each baseline failure addressed; one excellent example at most; heavy detail in a referenced file
+- [ ] Rerun with the skill: the agent complies
 
-**REFACTOR Phase - Close Loopholes:**
-- [ ] Identify NEW rationalizations from testing
-- [ ] Add explicit counters (if discipline skill)
-- [ ] Build rationalization table from all test iterations
-- [ ] Create red flags list
-- [ ] Re-test until bulletproof
-
-**Quality Checks:**
-- [ ] Small flowchart only if decision non-obvious
-- [ ] Quick reference table
-- [ ] Common mistakes section
-- [ ] No narrative storytelling
-- [ ] Supporting files only for tools or heavy reference
+**REFACTOR (discipline skills):**
+- [ ] New rationalizations countered in the rationalization table; rerun until it holds
 
 **Deployment:**
-- [ ] Commit skill to git and push to your fork (if configured)
-- [ ] Consider contributing back via PR (if broadly useful)
+- [ ] Commit and push to your fork; contribute back via PR if broadly useful

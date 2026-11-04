@@ -202,17 +202,12 @@ You MUST complete each phase before proceeding to the next. Phases can be short:
 
 ## Red Flags - STOP and Follow Process
 
-If you catch yourself thinking:
-- "Quick fix for now, investigate later"
-- "Just try changing X and see if it works"
-- "Add multiple changes, run tests"
-- "Skip the test, I'll manually verify"
+If you catch yourself thinking (beyond the excuses in the table below):
 - "It's probably X, let me fix that"
 - "I don't fully understand but this might work"
 - "Pattern says X but I'll adapt it differently"
 - "Here are the main problems: [lists fixes without investigation]"
 - Proposing solutions before tracing data flow
-- **"One more fix attempt" (when already tried 2+)**
 - **Each fix reveals new problem in different place**
 
 **ALL of these mean: STOP. Return to Phase 1.**

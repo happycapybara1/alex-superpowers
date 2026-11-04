@@ -294,10 +294,6 @@ If they decline, stay in text and don't offer again unless they raise it.
 their browser can't reach the companion's server. Stay in text and don't
 offer it.
 
-**Per question, ask: would they understand this better by seeing it?**
-Mockups, layouts, diagrams, and side-by-side designs go in the browser.
-Requirements, scope, tradeoffs, and conceptual choices stay in text. A
-question about a UI topic isn't automatically a visual question.
-
 If they accept, read `visual-companion.md` in this directory before
-starting the server.
+starting the server; it also says which questions belong in the browser
+and which stay in text.
