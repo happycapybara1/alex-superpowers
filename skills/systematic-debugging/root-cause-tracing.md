@@ -151,7 +151,7 @@ digraph principle {
 }
 ```
 
-**NEVER fix just where the error appears.** Trace back to find the original trigger.
+**Never fix just where the error appears.** Trace back to find the original trigger.
 
 ## Stack Trace Tips
 

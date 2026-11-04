@@ -19,7 +19,7 @@ When you have multiple unrelated failures (different test files, different subsy
 - Each problem can be understood without context from others
 - No shared state between investigations
 
-For when not to, see When NOT to Use below.
+For when not to, see When Not to Use below.
 
 ## The Pattern
 
@@ -85,7 +85,7 @@ These are timing/race condition issues. Your task:
    - Fixing bugs in abort implementation if found
    - Adjusting test expectations if testing changed behavior
 
-Do NOT just increase timeouts - find the real issue.
+Do not just increase timeouts; find the real issue.
 
 Return: Summary of what you found and what you fixed.
 ```
@@ -99,12 +99,12 @@ Return: Summary of what you found and what you fixed.
 **✅ Context:** Paste the error messages and test names
 
 **❌ No constraints:** Agent might refactor everything
-**✅ Constraints:** "Do NOT change production code" or "Fix tests only"
+**✅ Constraints:** "Do not change production code" or "Fix tests only"
 
 **❌ Vague output:** "Fix it" - you don't know what changed
 **✅ Specific:** "Return summary of root cause and changes"
 
-## When NOT to Use
+## When Not to Use
 
 **Related failures:** Fixing one might fix others - investigate together first
 **Need full context:** Understanding requires seeing entire system

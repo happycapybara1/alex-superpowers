@@ -44,7 +44,7 @@ Same cycle as code TDD, different test format.
 
 **Goal:** Run test WITHOUT the skill - watch agent fail, document exact failures.
 
-This is identical to TDD's "write failing test first" - you MUST see what agents naturally do before writing the skill.
+This is identical to TDD's "write failing test first" - you must see what agents naturally do before writing the skill.
 
 **Process:**
 
@@ -210,7 +210,7 @@ Write code before test? Delete it. Start over.
 ### 3. Red Flag Entry
 
 ```markdown
-## Red Flags - STOP
+## Red Flags
 
 - "Keep as reference" or "adapt existing code"
 - "I'm following the spirit not the letter"
@@ -332,7 +332,7 @@ Before deploying skill, verify you followed RED-GREEN-REFACTOR:
 ## Common Mistakes (Same as TDD)
 
 **❌ Writing skill before testing (skipping RED)**
-Reveals what YOU think needs preventing, not what ACTUALLY needs preventing.
+Reveals what you think needs preventing, not what actually needs preventing.
 ✅ Fix: Always run baseline scenarios first.
 
 **❌ Not watching test fail properly**

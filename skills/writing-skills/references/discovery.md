@@ -9,10 +9,10 @@ describe and size a skill so agents find it and read it.
 - Two required fields: `name` and `description` (see [agentskills.io/specification](https://agentskills.io/specification) for all supported fields)
 - `name`: at most 64 characters, lowercase letters, numbers, and hyphens only
 - `description`: at most 1024 characters
-- `description`: Third-person, describes ONLY when to use (NOT what it does)
+- `description`: Third-person, describes only when to use it, not what it does
   - Start with "Use when..." to focus on triggering conditions
   - Include specific symptoms, situations, and contexts
-  - **NEVER summarize the skill's process or workflow** (see Skill Discovery Optimization below for why)
+  - **Never summarize the skill's process or workflow** (see Skill Discovery Optimization below for why)
   - Keep under 500 characters if possible
 
 ```markdown
@@ -30,7 +30,7 @@ What is this? Core principle in 1-2 sentences.
 [Small inline flowchart IF decision non-obvious]
 
 Bullet list with SYMPTOMS and use cases
-When NOT to use
+When not to use
 
 ## Core Pattern (for techniques/patterns)
 Before/after code comparison
@@ -60,9 +60,9 @@ Concrete results
 
 **Format:** Start with "Use when..." to focus on triggering conditions
 
-**CRITICAL: Description = When to Use, NOT What the Skill Does**
+**Description = when to use, not what the skill does**
 
-The description should ONLY describe triggering conditions. Do NOT summarize the skill's process or workflow in the description.
+The description describes only triggering conditions. It does not summarize the skill's process or workflow.
 
 **Why this matters:** Testing revealed that when a description summarizes the skill's workflow, an agent may follow the description instead of reading the full skill content. A description saying "code review between tasks" caused an agent to do ONE review, even though the skill's flowchart clearly showed TWO reviews (spec compliance then code quality).
 
@@ -90,7 +90,7 @@ description: Use when implementing any feature or bugfix, before writing impleme
 - Keep triggers technology-agnostic unless the skill itself is technology-specific
 - If skill is technology-specific, make that explicit in the trigger
 - Write in third person (injected into system prompt)
-- **NEVER summarize the skill's process or workflow**
+- **Never summarize the skill's process or workflow**
 
 ```yaml
 # ❌ BAD: Too abstract, vague, doesn't include when to use
@@ -178,7 +178,7 @@ wc -w skills/path/SKILL.md
 # Other frequently-loaded: aim for <200 total
 ```
 
-**Name by what you DO or core insight:**
+**Name by what you do or by the core insight:**
 - ✅ `condition-based-waiting` > `async-test-helpers`
 - ✅ `using-skills` not `skill-usage`
 - ✅ `flatten-with-flags` > `data-structure-refactoring`

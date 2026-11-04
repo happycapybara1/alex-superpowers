@@ -7,7 +7,7 @@ description: Use when creating new skills, editing existing skills, or verifying
 
 ## Overview
 
-**Writing skills IS Test-Driven Development applied to process documentation.**
+**Writing skills is Test-Driven Development applied to process documentation.**
 
 **Personal skills live in your runtime's skills directory** (`~/.claude/skills/` on Claude Code) — see [codex-tools.md](../using-superpowers/references/codex-tools.md) or [gemini-tools.md](../using-superpowers/references/gemini-tools.md) for the path on those runtimes. Codex, Copilot CLI, and Gemini CLI all also recognize `~/.agents/skills/` as a cross-runtime alias.
 
@@ -25,7 +25,7 @@ A **skill** is a reference guide for proven techniques, patterns, or tools. Skil
 
 **Skills are:** Reusable techniques, patterns, tools, reference guides
 
-**Skills are NOT:** Narratives about how you solved a problem once
+**Skills are not:** Narratives about how you solved a problem once
 
 ## TDD Mapping for Skills
 
@@ -36,7 +36,7 @@ A **skill** is a reference guide for proven techniques, patterns, or tools. Skil
 | **Test fails (RED)** | Agent violates rule without skill (baseline) |
 | **Test passes (GREEN)** | Agent complies with skill present |
 | **Refactor** | Close loopholes while maintaining compliance |
-| **Write test first** | Run baseline scenario BEFORE writing skill |
+| **Write test first** | Run baseline scenario before writing skill |
 | **Watch it fail** | Document exact rationalizations agent uses |
 | **Minimal code** | Write skill addressing those specific violations |
 | **Watch it pass** | Verify agent now complies |
@@ -206,7 +206,7 @@ Different skill types need different test approaches:
 **Test with:**
 - Recognition scenarios: Do they recognize when pattern applies?
 - Application scenarios: Can they use the mental model?
-- Counter-examples: Do they know when NOT to apply?
+- Counter-examples: Do they know when not to apply?
 
 **Success criteria:** Agent correctly identifies when/how to apply pattern
 
@@ -228,7 +228,7 @@ Different skill types need different test approaches:
 | "Skill is obviously clear" | Clear to you ≠ clear to other agents. Test it. |
 | "It's just a reference" | References can have gaps, unclear sections. Test retrieval. |
 | "Testing is overkill" | Untested skills have issues. Always. 15 min testing saves hours. |
-| "I'll test if problems emerge" | Problems = agents can't use skill. Test BEFORE deploying. |
+| "I'll test if problems emerge" | Problems = agents can't use skill. Test before deploying. |
 | "Too tedious to test" | Testing is less tedious than debugging bad skill in production. |
 | "I'm confident it's good" | Overconfidence guarantees issues. Test anyway. |
 | "Academic review is enough" | Reading ≠ using. Test application scenarios. |
@@ -243,7 +243,7 @@ Before writing guidance, classify the baseline failure. The form that bulletproo
 | Baseline failure | Right form | Wrong form |
 |---|---|---|
 | Skips/violates a rule under pressure (knows better, does it anyway) | Prohibition + rationalization table + red flags (see references/bulletproofing.md) | Soft guidance ("prefer...", "consider...") |
-| Complies, but output has the wrong shape (bloated prompt, buried verdict, restated spec) | Positive recipe or contract: state what the output IS — its parts, in order | Prohibition list ("don't restate", "never narrate") |
+| Complies, but output has the wrong shape (bloated prompt, buried verdict, restated spec) | Positive recipe or contract: state what the output is — its parts, in order | Prohibition list ("don't restate", "never narrate") |
 | Omits a required element from something they already produce | Structural: REQUIRED field or slot in the template they fill in | Prose reminders near the template |
 | Behavior should depend on a condition | Conditional keyed to an observable predicate ("if the brief exists, reference it") | Unconditional rule + exemption clauses |
 

@@ -47,7 +47,7 @@ independently testable deliverable.
 
 ## Plan Document Header
 
-**Every plan MUST start with this header:**
+**Every plan starts with this header:**
 
 ```markdown
 # [Feature Name] Implementation Plan

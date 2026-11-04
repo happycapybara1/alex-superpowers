@@ -139,14 +139,14 @@ Subagent (general-purpose):
 
     ## Critical Rules
 
-    **DO:**
+    **Do:**
     - Categorize by actual severity
     - Be specific (file:line, not vague)
     - Explain WHY each issue matters
     - Acknowledge strengths
     - Give a clear verdict
 
-    **DON'T:**
+    **Don't:**
     - Say "looks good" without checking
     - Mark nitpicks as Critical
     - Give feedback on code you didn't actually read

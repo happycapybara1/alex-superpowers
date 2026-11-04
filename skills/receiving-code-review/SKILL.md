@@ -26,7 +26,7 @@ WHEN receiving code review feedback:
 
 ## Forbidden Responses
 
-**NEVER:**
+**Don't say:**
 - "You're absolutely right!"
 - "Great point!" / "Excellent feedback!" (performative)
 - "Let me implement that now" (before verification)
@@ -41,7 +41,7 @@ WHEN receiving code review feedback:
 
 ```
 IF any item is unclear:
-  STOP - do not implement anything yet
+  Stop: implement nothing yet
   ASK for clarification on unclear items
 
 WHY: Items may be related. Partial understanding = wrong implementation.
@@ -66,7 +66,7 @@ You understand 1,2,3,6. Unclear on 4,5.
 
 ### From External Reviewers
 ```
-BEFORE implementing:
+Before implementing:
   1. Check: Technically correct for THIS codebase?
   2. Check: Breaks existing functionality?
   3. Check: Reason for current implementation?
@@ -130,7 +130,7 @@ Push back when:
 
 ## Acknowledging Correct Feedback
 
-When feedback IS correct:
+When feedback is correct:
 ```
 ✅ "Fixed. [Brief description of what changed]"
 ✅ "Good catch - [specific issue]. Fixed in [location]."
@@ -140,7 +140,7 @@ When feedback IS correct:
 ❌ "Great point!"
 ❌ "Thanks for catching that!"
 ❌ "Thanks for [anything]"
-❌ ANY gratitude expression
+❌ Any expression of gratitude
 ```
 
 **Why no thanks:** Actions speak. Just fix it. The code itself shows you heard the feedback.

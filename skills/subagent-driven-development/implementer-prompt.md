@@ -79,7 +79,7 @@ Subagent (general-purpose):
     It is always OK to stop and say "this is too hard for me." Bad work is worse than
     no work. You will not be penalized for escalating.
 
-    **STOP and escalate when:**
+    **Stop and escalate when:**
     - The task requires architectural decisions with multiple valid approaches
     - You need to understand code beyond what was provided and can't find clarity
     - You feel uncertain about whether your approach is correct
@@ -139,7 +139,7 @@ Subagent (general-purpose):
     - Self-review findings (if any)
     - Any issues or concerns
 
-    Then report back with ONLY (under 15 lines — the detail lives in the
+    Then report back with only (under 15 lines — the detail lives in the
     report file):
     - **Status:** DONE | DONE_WITH_CONCERNS | BLOCKED | NEEDS_CONTEXT
     - Commits created (short SHA + subject)

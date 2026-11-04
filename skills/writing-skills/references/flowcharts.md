@@ -17,7 +17,7 @@ digraph when_flowchart {
 }
 ```
 
-**Use flowcharts ONLY for:**
+**Use flowcharts only for:**
 - Non-obvious decision points
 - Process loops where you might stop too early
 - "When to use A vs B" decisions
