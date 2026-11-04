@@ -209,7 +209,16 @@ and fix-round diffs need it.
   fix-loop rounds 1-3 resume this agent.
 - Never dispatch multiple implementation subagents in parallel (conflicts).
 
-Template: [implementer-prompt.md](implementer-prompt.md)
+**Dispatch prompt** (the whole prompt; the instructions live in [implementer-prompt.md](implementer-prompt.md), which the implementer reads itself — never paste it). `<skill-dir>` is this skill's directory as an absolute path:
+
+```
+You are the implementer for [TASK].
+Read <skill-dir>/implementer-prompt.md and follow it. Your values:
+- BRIEF_FILE: <path task-brief printed>
+- REPORT_FILE: <brief path with -brief replaced by -report>
+- WORKDIR: <directory>
+- CONTEXT: <items (1), (3), (4) above, and any parked-finding pointer>
+```
 
 ### 2. Handle the report
 
@@ -264,7 +273,15 @@ If the reviewer reports "⚠️ Cannot verify from diff" items, read
 [references/cannot-verify.md](references/cannot-verify.md) before you mark
 the task complete.
 
-Template: [task-reviewer-prompt.md](task-reviewer-prompt.md)
+**Dispatch prompt** (the reviewer reads [task-reviewer-prompt.md](task-reviewer-prompt.md) itself — never paste it):
+
+```
+You are the task reviewer for [TASK].
+Read <skill-dir>/task-reviewer-prompt.md and follow it. Your values:
+- BRIEF_FILE, REPORT_FILE, DIFF_FILE: <paths>
+- BASE_SHA, HEAD_SHA: <commits>
+- GLOBAL_CONSTRAINTS: <copied verbatim, as above>
+```
 
 ### 4. The fix loop
 

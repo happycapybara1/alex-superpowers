@@ -42,9 +42,10 @@ covering test files in the fix message — a one-line fix does not need the
 whole suite.
 
 **The re-review is scoped.** Run `bash scripts/review-package PLAN_FILE FIX_BASE HEAD`
-where FIX_BASE is the head the previous review saw, and dispatch
-[re-review-prompt.md](../re-review-prompt.md) with the findings list, the
-brief, the report file, and the printed diff path. The re-reviewer verdicts
+where FIX_BASE is the head the previous review saw, and dispatch the
+re-reviewer with a short prompt: "Read <skill-dir>/re-review-prompt.md and
+follow it", plus its values (FINDINGS verbatim, BRIEF_FILE, REPORT_FILE,
+DIFF_FILE, FIX_BASE_SHA, HEAD_SHA). Never paste the template itself. The re-reviewer verdicts
 each finding ADDRESSED or NOT ADDRESSED and flags new breakage in the fix
 diff only. New Critical/Important breakage in the fix diff joins the open
 findings list. Out-of-scope observations go to the ledger as deferred

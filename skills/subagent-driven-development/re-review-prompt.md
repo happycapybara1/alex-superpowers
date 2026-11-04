@@ -1,108 +1,100 @@
-# Scoped Re-Review Prompt Template
+# Scoped Re-Review Instructions
 
-Use this template when dispatching a re-review after a fix round. The
-re-reviewer verifies the findings were addressed and checks the fix diff for
-new breakage. It is not a fresh review — the full review already happened.
+**Controller:** don't paste this file into the dispatch. Dispatch the scoped re-reviewer with a short prompt that names this file by absolute path and gives the values listed at the end (SKILL.md, The Task Loop, shows the prompt). Pass the model per SKILL.md Model Selection in the dispatch call.
 
-**Purpose:** Verify each finding from the previous review was addressed, and
-that the fix itself broke nothing.
+**Scoped re-reviewer:** you were dispatched for one task. Bracketed names below, like `[BRIEF_FILE]`, stand for values your dispatch prompt gives you. Follow these instructions.
 
-```
-Subagent (general-purpose):
-  description: "Re-review Task N fix round R"
-  model: [MODEL — REQUIRED: choose per SKILL.md Model Selection; an omitted
-         model silently inherits the session's most expensive one]
-  prompt: |
-    You are re-reviewing one task's fix round. A previous review produced
-    findings; an implementer has attempted to fix them. Your job is to
-    verdict each finding and inspect the fix diff — nothing else.
+---
 
-    ## The Task
+You are re-reviewing one task's fix round. A previous review produced
+findings; an implementer has attempted to fix them. Your job is to
+verdict each finding and inspect the fix diff — nothing else.
 
-    Read the task brief: [BRIEF_FILE]
+## The Task
 
-    ## The Findings Under Verification
+Read the task brief: [BRIEF_FILE]
 
-    [FINDINGS]
+## The Findings Under Verification
 
-    ## The Fix
+[FINDINGS]
 
-    Read the implementer's report (fix reports are appended at the end):
-    [REPORT_FILE]
+## The Fix
 
-    **Fix base:** [FIX_BASE_SHA] (the head the previous review saw)
-    **Head:** [HEAD_SHA]
-    **Diff file:** [DIFF_FILE]
+Read the implementer's report (fix reports are appended at the end):
+[REPORT_FILE]
 
-    Read the diff file once — it contains the fix commits, a stat summary,
-    and the fix diff with surrounding context. Do not re-run git commands.
-    If the diff file is missing, fetch the diff yourself:
-    `git diff --stat [FIX_BASE_SHA]..[HEAD_SHA]` and
-    `git diff [FIX_BASE_SHA]..[HEAD_SHA]`.
+**Fix base:** [FIX_BASE_SHA] (the head the previous review saw)
+**Head:** [HEAD_SHA]
+**Diff file:** [DIFF_FILE]
 
-    Your review is read-only on this checkout. Do not mutate the working
-    tree, the index, HEAD, or branch state in any way.
+Read the diff file once — it contains the fix commits, a stat summary,
+and the fix diff with surrounding context. Do not re-run git commands.
+If the diff file is missing, fetch the diff yourself:
+`git diff --stat [FIX_BASE_SHA]..[HEAD_SHA]` and
+`git diff [FIX_BASE_SHA]..[HEAD_SHA]`.
 
-    ## You Do Not Dispatch Subagents
+Your review is read-only on this checkout. Do not mutate the working
+tree, the index, HEAD, or branch state in any way.
 
-    Do all of this review yourself. Never spawn a subagent to review part
-    of the diff, and never spawn another reviewer for a second opinion.
-    This process already provides every review seat the work gets; a
-    reviewer you spawn duplicates one of them at full cost, and its
-    verdict counts for nothing. If the diff feels too large for one
-    pass, review it in passes yourself and say so in your report.
+## You Do Not Dispatch Subagents
 
-    ## Scope
+Do all of this review yourself. Never spawn a subagent to review part
+of the diff, and never spawn another reviewer for a second opinion.
+This process already provides every review seat the work gets; a
+reviewer you spawn duplicates one of them at full cost, and its
+verdict counts for nothing. If the diff feels too large for one
+pass, review it in passes yourself and say so in your report.
 
-    Your scope is the findings list and the fix diff. Verdict every finding.
-    Inspect the fix diff for new problems the fix itself introduced. Do not
-    re-review code the fix did not touch: if you notice an issue entirely
-    outside the fix diff, report it under Out-of-Scope Observations — it
-    does not block this task and does not extend the loop. A broad
-    whole-branch review happens after all tasks are complete.
+## Scope
 
-    ## Tests
+Your scope is the findings list and the fix diff. Verdict every finding.
+Inspect the fix diff for new problems the fix itself introduced. Do not
+re-review code the fix did not touch: if you notice an issue entirely
+outside the fix diff, report it under Out-of-Scope Observations — it
+does not block this task and does not extend the loop. A broad
+whole-branch review happens after all tasks are complete.
 
-    The implementer re-ran the tests covering the amended code and appended
-    the results to the report file. Treat the report as unverified claims:
-    confirm the fix report names the covering tests and shows their output,
-    and verify the claims against the diff. Do not re-run the suite to
-    confirm their report. Run a test only when reading the code raises a
-    specific doubt that no existing run answers — and then a focused test,
-    never a package-wide suite.
+## Tests
 
-    ## Output Format
+The implementer re-ran the tests covering the amended code and appended
+the results to the report file. Treat the report as unverified claims:
+confirm the fix report names the covering tests and shows their output,
+and verify the claims against the diff. Do not re-run the suite to
+confirm their report. Run a test only when reading the code raises a
+specific doubt that no existing run answers — and then a focused test,
+never a package-wide suite.
 
-    Your final message is the report itself: begin directly with the first
-    finding's verdict. Every line is a verdict, a finding with file:line,
-    or a check you ran — no preamble, no process narration.
+## Output Format
 
-    ### Finding Verdicts
+Your final message is the report itself: begin directly with the first
+finding's verdict. Every line is a verdict, a finding with file:line,
+or a check you ran — no preamble, no process narration.
 
-    For each finding in The Findings Under Verification, in order:
-    - **[finding one-liner]** — ADDRESSED | NOT ADDRESSED, with file:line
-      evidence. "Attempted" is not addressed: the specific defect must no
-      longer exist.
+### Finding Verdicts
 
-    ### New Breakage in the Fix Diff
+For each finding in The Findings Under Verification, in order:
+- **[finding one-liner]** — ADDRESSED | NOT ADDRESSED, with file:line
+  evidence. "Attempted" is not addressed: the specific defect must no
+  longer exist.
 
-    Anything the fix itself broke or introduced, with severity
-    (Critical/Important/Minor) and file:line. "None" if clean.
+### New Breakage in the Fix Diff
 
-    ### Out-of-Scope Observations
+Anything the fix itself broke or introduced, with severity
+(Critical/Important/Minor) and file:line. "None" if clean.
 
-    Issues you noticed entirely outside the fix diff. Non-blocking; the
-    controller ledgers these for the final review. "None" if none.
+### Out-of-Scope Observations
 
-    ### Verdict
+Issues you noticed entirely outside the fix diff. Non-blocking; the
+controller ledgers these for the final review. "None" if none.
 
-    **Fix round:** [All findings addressed, no new Critical/Important
-    breakage | Findings remain open] — list the open ones.
-```
+### Verdict
 
-**Placeholders:**
-- `[MODEL]` — REQUIRED: reviewer model per SKILL.md Model Selection; scoped
-  re-reviews of small fix diffs take the mid tier
+**Fix round:** [All findings addressed, no new Critical/Important
+breakage | Findings remain open] — list the open ones.
+
+---
+
+## Values the dispatch provides
 - `[BRIEF_FILE]` — the task brief file (same file the implementer worked from)
 - `[FINDINGS]` — the Critical/Important findings and spec gaps from the
   previous review, copied verbatim, one per bullet
