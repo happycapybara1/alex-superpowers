@@ -11,7 +11,24 @@ Execute plan by dispatching a fresh implementer subagent per task, a task review
 
 **Core principle:** Fresh subagent per task + task review (spec + quality) + broad final review = high quality, fast iteration
 
-**Read [references/execution-rules.md](references/execution-rules.md) now, and again after any compaction** — the rules this skill shares with executing-plans: continuous execution, rulings, the four things that stop you, narration, the ledger, Setup, and Finish.
+**Narration:** between tool calls, at most one short line — the ledger
+and the tool results carry the record.
+
+**Continuous execution:** Do not pause to check in with your human partner between tasks. Execute all tasks from the plan without stopping. The only reasons to stop are the four named below, or all tasks complete. "Should I continue?" prompts and progress summaries waste their time — they asked you to execute the plan, so execute it.
+
+**Rulings, not stalls.** A running plan does not wait on a human. Conflicts,
+ambiguities, plan defects, a cap you would have asked to exceed — decide
+them. The spec is the binding authority, the plan is its argument, and your
+judgment settles what neither answers. Record every decision in the ledger as
+`Ruling: <what you decided> — <why> — <what it costs if wrong>`, and keep
+going. A wrong ruling costs rework your human partner can see and undo; a
+session parked on a question costs their whole day and buys nothing.
+
+Four things stop you, and only these: an irreversible or destructive
+operation; a security-sensitive action; a side effect outside this worktree
+that norms say you ask about first (a merge, a push to a shared branch, a
+publish); and a plan so broken that every path forward is a guess. For those,
+stop and ask.
 
 ## When to Use
 
@@ -41,10 +58,39 @@ digraph when_to_use {
 
 ## Setup
 
-Run Setup from execution-rules.md (worktree, plan workspace, ledger, plan
-and spec). Its pre-flight scan, under this skill, is
-[references/preflight.md](references/preflight.md): read it before
-dispatching Task 1; its table and rulings go in the ledger.
+Work in an isolated workspace: superpowers:using-git-worktrees creates or
+verifies one. Never start implementation on a main/master branch without
+your human partner's explicit consent.
+
+Conversation memory does not survive compaction. In real sessions,
+controllers that lost their place have re-dispatched entire completed task
+sequences — the single most expensive failure observed. Track progress in
+a ledger file, not only in todos.
+
+- Each plan owns a workspace: at skill start, run this skill's
+  `bash scripts/sdd-workspace PLAN_FILE` — it prints the plan's git-ignored
+  directory (under `<repo-root>/.superpowers/sdd/`), home to every artifact
+  for THIS plan: ledger, briefs, reports, review packages. Another plan's
+  directory is never yours to read or write. `git clean -fdx` destroys
+  this git-ignored scratch; if that happens, recover from `git log`.
+- If `<workspace>/progress.md` exists, read
+  [references/resuming.md](references/resuming.md) before anything else:
+  it says whose ledger it is and where to resume. Otherwise create the
+  ledger with its identity as the first line:
+  `# SDD ledger — plan: <plan file path>`.
+- The ledger is your recovery map: the commits it names exist in git even
+  when your context no longer remembers creating them. After compaction,
+  trust the ledger and `git log` over your own recollection.
+
+Read the plan once, note its context and Global Constraints, and create a
+todo per task. If the plan names a Spec, read that too: the spec is the
+authority the plan argues from, and conflicts inside the plan resolve
+against it. A plan with no reachable spec gets a ledger note saying so —
+rulings made without one are provisional.
+
+Before dispatching Task 1, read [references/preflight.md](references/preflight.md)
+and run the conflict scan it describes. Its table and rulings go in the
+ledger.
 
 ## Model Selection
 
@@ -65,6 +111,10 @@ Scale a task reviewer to the diff's size, complexity, and risk: a small mechanic
 **Small same-shape work:** when the plan lists several small edits of the
 same kind across files, read [references/batching.md](references/batching.md)
 before dispatching them.
+
+Everything you paste into a dispatch prompt — and everything a subagent
+prints back — stays resident in your context for the rest of the session
+and is re-read on every later turn. Hand artifacts over as files.
 
 **Waiting on dispatched subagents:** never poll a wait interface with
 short timeouts, and never sit in one silent, open-ended wait either.
@@ -121,6 +171,8 @@ Read <skill-dir>/implementer-prompt.md and follow it. Your values:
 - WORKDIR: <directory>
 - CONTEXT: <items (1), (3), (4) above, and any parked-finding pointer>
 ```
+
+Use this exact prompt shape for every task's dispatch, not only the first: a hand-written summary of the template drops rules the subagent needs.
 
 ### 2. Handle the report
 
@@ -187,6 +239,8 @@ Read <skill-dir>/task-reviewer-prompt.md and follow it. Your values:
 - GLOBAL_CONSTRAINTS: <copied verbatim, as above>
 ```
 
+Same for every review dispatch.
+
 ### 4. The fix loop
 
 The loop triggers when the review reports spec ❌, any Critical or Important
@@ -215,12 +269,28 @@ parked-with-ruling at the cap.
 
 When every task is complete, read
 [references/final-review.md](references/final-review.md) and follow it. It
-covers the whole-branch review, its single fix wave, and how you finish.
+covers the whole-branch review and its single fix wave; then Finish.
+
+## Finish
+
+Before you delete anything, write your final message: one opening line
+(tasks done, suite status, how many rulings you made); every ledger line
+containing `Ruling:` — preflight rulings, parked findings, breaker
+adjudications, all of them — under "Rulings I made", highest
+cost-if-wrong first, each with what it costs if wrong; every
+`minor (deferred)` line no fix addressed, under "Deferred minors". Both
+lists are exhaustive: if the ledger holds it, the list holds it. That
+message is the only place the decisions you took on your human partner's
+behalf reach them — they read it and rework whatever you got wrong. A
+ruling that dies with the workspace was a decision made in secret.
+
+When the final review is clean and its fixes are committed, delete this
+plan's workspace (`rm -rf <workspace>`) — the git history is the record
+now. Sibling directories belong to other plans; leave them alone.
+
+Use superpowers:finishing-a-development-branch.
 
 ## Common Rationalizations
-
-The rows on check-ins, unledgered deviations, and the ledger are in
-execution-rules.md.
 
 | Excuse | Reality |
 |--------|---------|
@@ -231,4 +301,5 @@ execution-rules.md.
 | "This finding is obviously wrong, I'll drop it" | You rule only at the cap or on a plan-mandated finding (references/fix-loop.md), and every ruling is a ledger entry. Silent discards are forbidden. |
 | "The fix was small, skip the re-review" | Unreviewed fixes are how regressions land. Every round ends with a scoped re-review. |
 | "Reviews slow the loop down" | The loop without reviews is just unverified churn. Reviews are the loop's brakes and steering. |
+| "Ledger bookkeeping is overhead" | The ledger is what survives compaction. Controllers without one have re-dispatched entire completed task sequences. |
 | "The implementer spawned its own reviewer — free extra assurance" | It's a duplicate seat reviewing the same diff; the task review is the gate. A worker-spawned reviewer is a defect to flag, not rigor. |

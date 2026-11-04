@@ -24,12 +24,12 @@ dispatched by path as in fix-loop.md).
 Adjudicate any residual findings as in the fix loop's breaker
 (references/fix-loop.md): park with rulings, or rule on the load-bearing
 ones and ledger what you decided. Only the four things that stop a running
-plan ([execution-rules.md](execution-rules.md)) stop you here. There is no
+plan (top of SKILL.md) stop you here. There is no
 second fix wave — residual load-bearing findings surface to your human
 partner when finishing-a-development-branch presents the options.
 
 ### Finish
 
-Read the Finish section of [execution-rules.md](execution-rules.md) now
-and follow it: the final message with "Rulings I made" and "Deferred
-minors", workspace cleanup, then superpowers:finishing-a-development-branch.
+Follow the Finish section of SKILL.md now: the final message with
+"Rulings I made" and "Deferred minors", workspace cleanup, then
+superpowers:finishing-a-development-branch.
