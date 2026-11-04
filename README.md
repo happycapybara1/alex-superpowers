@@ -2,27 +2,19 @@
 
 Superpowers is a complete software development methodology for your coding agents, built on top of a set of composable skills and some initial instructions that make sure your agent uses them.
 
+> **Fork of [obra/superpowers](https://github.com/obra/superpowers)** (version `7.0.1-alx`): skills reviewed and compressed, packaging trimmed to Claude Code, Codex, Gemini CLI, GitHub Copilot CLI, OpenCode, and Hermes. Install from this repository as below, after removing any upstream Superpowers install (both use the plugin name `superpowers`).
+
 ## Table of Contents
 
 - [How it works](#how-it-works)
 - [Commercial Services](#commercial-services)
 - [Getting Started](#installation)
   - [Claude Code](#claude-code)
-  - [Antigravity](#antigravity)
-  - [Codex App](#codex-app)
-  - [Codex CLI](#codex-cli)
-  - [Cursor](#cursor)
-  - [Devin CLI](#devin-cli)
-  - [Factory Droid](#factory-droid)
+  - [Codex](#codex)
   - [Gemini CLI](#gemini-cli)
   - [GitHub Copilot CLI](#github-copilot-cli)
-  - [Grok Build CLI](#grok-build-cli)
-  - [Kimi Code](#kimi-code)
   - [OpenCode](#opencode)
-  - [Pi](#pi)
-  - [Qwen Code](#qwen-code)
   - [Hermes Agent](#hermes-agent)
-  - [Muse](#muse)
 - [The Basic Workflow](#the-basic-workflow)
 - [When Something Goes Wrong](#when-something-goes-wrong)
 - [Community](#community)
@@ -51,118 +43,39 @@ If you're using Superpowers in enterprise and could benefit from commercial supp
 
 ## Installation
 
-Installation differs by harness. If you use more than one, install Superpowers separately for each one.
+Installation differs by harness. If you use more than one, install Superpowers separately for each one. Each command installs this fork; remove an upstream Superpowers install first.
 
 ### Claude Code
 
-Superpowers is available via the [official Claude plugin marketplace](https://claude.com/plugins/superpowers)
-
-#### Official Marketplace
-
-- Install the plugin from Anthropic's official marketplace:
+- Register this repository as a marketplace:
 
   ```bash
-  /plugin install superpowers@claude-plugins-official
+  /plugin marketplace add happycapybara1/superpowers
   ```
 
-#### Superpowers Marketplace
-
-The Superpowers marketplace provides Superpowers and some other related plugins for Claude Code.
-
-- Register the marketplace:
+- Install the plugin from it:
 
   ```bash
-  /plugin marketplace add obra/superpowers-marketplace
+  /plugin install superpowers@superpowers-dev
   ```
 
-- Install the plugin from this marketplace:
+### Codex
+
+- Register this repository as a marketplace and add the plugin:
 
   ```bash
-  /plugin install superpowers@superpowers-marketplace
+  codex plugin marketplace add happycapybara1/superpowers --ref main
+  codex plugin add superpowers@superpowers-dev
   ```
 
-### Antigravity
-
-Install Superpowers as a plugin from this repository:
-
-```bash
-agy plugin install https://github.com/obra/superpowers
-```
-
-Antigravity lists each installed skill's description, and the description of
-the `using-superpowers` skill prompts the model to load that skill at the start
-of a conversation. Reinstall with the same command to update.
-
-### Codex App
-
-Superpowers is available via the [official Codex plugin marketplace](https://github.com/openai/plugins).
-
-- In the Codex app, click on Plugins in the sidebar.
-- You should see `Superpowers` in the Coding section.
-- Click the `+` next to Superpowers and follow the prompts.
-
-### Codex CLI
-
-Superpowers is available via the [official Codex plugin marketplace](https://github.com/openai/plugins).
-
-- Open the plugin search interface:
-
-  ```bash
-  /plugins
-  ```
-
-- Search for Superpowers:
-
-  ```bash
-  superpowers
-  ```
-
-- Select `Install Plugin`.
-
-### Cursor
-
-- In Cursor Agent chat, install from marketplace:
-
-  ```text
-  /add-plugin superpowers
-  ```
-
-- Or search for "superpowers" in the plugin marketplace.
-
-### Devin CLI
-
-- Install the plugin from this repository:
-
-  ```bash
-  devin plugins install obra/superpowers
-  ```
-
-- Update to the latest version with:
-
-  ```bash
-  devin plugins update superpowers
-  ```
-
-### Factory Droid
-
-- Register the marketplace:
-
-  ```bash
-  droid plugin marketplace add https://github.com/obra/superpowers
-  ```
-
-- Install the plugin:
-
-  ```bash
-  droid plugin install superpowers@superpowers
-  ```
+- The same install covers the Codex app: restart the app afterwards.
 
 ### Gemini CLI
 
 - Install the extension:
 
   ```bash
-  gemini extensions install https://github.com/obra/superpowers
+  gemini extensions install https://github.com/happycapybara1/superpowers
   ```
 
 - Update later:
@@ -173,53 +86,17 @@ Superpowers is available via the [official Codex plugin marketplace](https://git
 
 ### GitHub Copilot CLI
 
-- Register the marketplace:
+- Register this repository as a marketplace:
 
   ```bash
-  copilot plugin marketplace add obra/superpowers-marketplace
+  copilot plugin marketplace add happycapybara1/superpowers
   ```
 
 - Install the plugin:
 
   ```bash
-  copilot plugin install superpowers@superpowers-marketplace
+  copilot plugin install superpowers@superpowers-dev
   ```
-
-### Grok Build CLI
-
-Superpowers is available via the [official Grok plugin marketplace](https://github.com/xai-org/plugin-marketplace).
-
-- Install the plugin from xAI's official marketplace:
-
-  ```bash
-  grok plugin install superpowers@xai-official --trust
-  ```
-
-- Or open the marketplace in the TUI, search for Superpowers, and install it:
-
-  ```text
-  /marketplace
-  ```
-
-### Kimi Code
-
-Superpowers is available in Kimi Code's plugin marketplace.
-
-- Open Kimi Code's plugin manager:
-
-  ```text
-  /plugins
-  ```
-
-- Go to `Marketplace` > `Superpowers` and install it.
-
-- Or install directly from this repository:
-
-  ```text
-  /plugins install https://github.com/obra/superpowers
-  ```
-
-- Detailed docs: [docs/README.kimi.md](docs/README.kimi.md)
 
 ### OpenCode
 
@@ -229,81 +106,22 @@ already use it in another harness.
 - Tell OpenCode:
 
   ```
-  Fetch and follow instructions from https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.opencode/INSTALL.md
+  Fetch and follow instructions from https://raw.githubusercontent.com/happycapybara1/superpowers/refs/heads/main/.opencode/INSTALL.md
   ```
 
 - Detailed docs: [docs/README.opencode.md](docs/README.opencode.md)
-
-### Pi
-
-Install Superpowers as a Pi package from this repository:
-
-```bash
-pi install git:github.com/obra/superpowers
-```
-
-For local development, run Pi with this checkout loaded as a temporary package:
-
-```bash
-pi -e /path/to/superpowers
-```
-
-The Pi package loads the Superpowers skills and a small extension that injects the `using-superpowers` bootstrap at session startup and again after compaction. Pi has native skills, so no compatibility `Skill` tool is required. Subagent and task-list tools remain optional Pi companion packages.
-
-### Qwen Code
-
-Qwen Code installs plugins from Claude Code marketplaces directly.
-
-- Install the plugin from this repository, and pick `superpowers` when prompted:
-
-  ```bash
-  qwen extensions install obra/superpowers
-  ```
-
-- Update later:
-
-  ```bash
-  qwen extensions update superpowers
-  ```
 
 ### Hermes Agent
 
 Install Superpowers as a Hermes plugin from this repository:
 
 ```bash
-hermes plugins install obra/superpowers --enable
+hermes plugins install happycapybara1/superpowers --enable
 ```
 
 Restart any active Hermes sessions after installing. Note: Hermes has no
 post-compaction hook, so a very long session that compacts over its first
 turn loses the bootstrap — start a fresh session if skills stop triggering.
-
-### Muse
-
-Superpowers is available as a native Muse plugin — same repo, same skills, all harnesses. The `using-superpowers` bootstrap is injected via the native `SessionStart` hook alongside Claude Code, Codex, Cursor, Gemini, Pi, and the rest — no per-session opt-in.
-
-- Install from a local checkout:
-
-  ```bash
-  muse plugins install ./
-  muse plugins approve superpowers
-  ```
-
-  Or clone and install:
-
-  ```bash
-  git clone https://github.com/obra/superpowers.git
-  muse plugins install ./superpowers
-  muse plugins approve superpowers
-  ```
-
-- Update later:
-
-  ```bash
-  muse plugins update superpowers
-  ```
-
-Restart any active Muse sessions after installing so the `SessionStart` hook takes effect — skills are active immediately, hooks require approval on first install. To verify, start a fresh session and send `Let's make a react todo list` — a working install auto-triggers `brainstorming` before any code is written. Version is tracked in `.version-bump.json` so `scripts/bump-version.sh` keeps it in sync.
 
 ## The Basic Workflow
 
