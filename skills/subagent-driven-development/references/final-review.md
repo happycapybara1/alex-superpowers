@@ -24,9 +24,9 @@ dispatched by path as in fix-loop.md).
 Adjudicate any residual findings as in the fix loop's breaker
 (references/fix-loop.md): park with rulings, or rule on the load-bearing
 ones and ledger what you decided. Only the four things that stop a running
-plan (top of SKILL.md) stop you here. There is no
-second fix wave — residual load-bearing findings surface to your human
-partner when finishing-a-development-branch presents the options.
+plan (top of SKILL.md) stop you here. There is no second fix wave —
+residual load-bearing findings surface to your human partner when
+finishing-a-development-branch presents the options.
 
 ### Finish
 

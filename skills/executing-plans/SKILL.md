@@ -54,15 +54,15 @@ its cost only in the final review, which this skill dispatches
 separately. Tell your human partner so when they choose inline.
 
 Prefer superpowers:subagent-driven-development when your human partner
-wants a review gate on every task, or the plan is long enough that
-later tasks would run on a compacted context: the ledger keeps a long
-inline run recoverable, but the last tasks get the least of you.
+wants a review gate on every task, or the plan is long enough that later
+tasks would run on a compacted context: the ledger keeps a long inline
+run recoverable, but the last tasks get the least of you.
 
 ## Setup
 
 Work in an isolated workspace: superpowers:using-git-worktrees creates
-or verifies one. Never start implementation on a main/master branch without your human
-partner's explicit consent.
+or verifies one. Never start implementation on a main/master branch
+without your human partner's explicit consent.
 
 Conversation memory does not survive compaction. An inline executor that
 loses its place re-implements tasks whose commits already exist. Track
@@ -151,7 +151,7 @@ BASE is what the review range is cut from, never `HEAD~1`.
 
 ### 3. The completion contract
 
-Before a task's ledger line, all of the following are true, with evidence
+Before a task's ledger line, all of these are true, with evidence
 in this session — not inferred from the diff looking right:
 
 - Every test the brief names exists and ran in this task, and you read
@@ -204,15 +204,16 @@ is enough before merge.
 Sort the findings before you act on any of them; the reviewer's severity
 labels are advice, the gate is yours. Re-grade first, by effect: a
 finding's grade is what a reasonable person using this software gets if
-it ships, not whether the spec names the input that triggers it. Its "Declined to judge" list is yours too: every
-line is a ruling you make and ledger — `Final: Ruling: <behavior the
-reviewer set aside> — <what a reasonable person gets, and why that stands
-or is now a finding> — <cost if wrong>`. Then:
+it ships, not whether the spec names the input that triggers it. Its
+"Declined to judge" list is yours too: every line is a ruling you make
+and ledger — `Final: Ruling: <behavior the reviewer set aside> — <what a
+reasonable person gets, and why that stands or is now a finding> — <cost
+if wrong>`. Then:
 
 - **Critical and Important** enter the fix pass.
 - **Minor** goes to the ledger as `Final: minor (deferred): <one-liner>`,
-  which Finish reports. Minors never enter the fix pass and never become rulings — a ruling decides a conflict,
-  not a declined polish suggestion.
+  which Finish reports. Minors never enter the fix pass and never become
+  rulings — a ruling decides a conflict, not a declined polish suggestion.
 
 Fix the Critical and Important findings yourself, in ONE pass. Each fix is
 verified by TDD, not by a second reviewer: write the test that reproduces

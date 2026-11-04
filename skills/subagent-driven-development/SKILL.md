@@ -7,14 +7,14 @@ description: Use when executing implementation plans with independent tasks in t
 
 Execute plan by dispatching a fresh implementer subagent per task, a task review (spec compliance + code quality) after each, and a broad whole-branch review at the end.
 
-**Why subagents:** You delegate tasks to specialized agents with isolated context. By precisely crafting their instructions and context, you ensure they stay focused and succeed at their task. They should never inherit your session's context or history — you construct exactly what they need. This also preserves your own context for coordination work.
+**Why subagents:** Each task goes to an agent with isolated context and exactly the instructions and context you construct for it — never your session's history — so it stays focused, and your own context stays free for coordination.
 
 **Core principle:** Fresh subagent per task + task review (spec + quality) + broad final review = high quality, fast iteration
 
 **Narration:** between tool calls, at most one short line — the ledger
 and the tool results carry the record.
 
-**Continuous execution:** Do not pause to check in with your human partner between tasks. Execute all tasks from the plan without stopping. The only reasons to stop are the four named below, or all tasks complete. "Should I continue?" prompts and progress summaries waste their time — they asked you to execute the plan, so execute it.
+**Continuous execution:** Do not pause to check in with your human partner between tasks. Execute all tasks without stopping; the only reasons to stop are the four below, or all tasks complete. "Should I continue?" prompts and progress summaries waste their time — they asked you to execute the plan, so execute it.
 
 **Rulings, not stalls.** A running plan does not wait on a human. Conflicts,
 ambiguities, plan defects, a cap you would have asked to exceed — decide
@@ -51,8 +51,7 @@ digraph when_to_use {
 ```
 
 **vs. Executing Plans (inline):**
-- Fresh subagent per task (no context pollution) instead of one context doing every task
-- Review after each task (spec compliance + code quality) instead of only at the end
+- Fresh subagent per task (no context pollution) and a review after each (spec compliance + code quality); inline does every task in one context and reviews only at the end
 - Costs a fresh context per task and per review; inline costs one context plus one final reviewer
 - Both run in this session, share the same plan workspace and ledger, and never pause between tasks
 
@@ -78,9 +77,9 @@ a ledger file, not only in todos.
   it says whose ledger it is and where to resume. Otherwise create the
   ledger with its identity as the first line:
   `# SDD ledger — plan: <plan file path>`.
-- The ledger is your recovery map: the commits it names exist in git even
-  when your context no longer remembers creating them. After compaction,
-  trust the ledger and `git log` over your own recollection.
+- The ledger is your recovery map: its commits exist in git even when you
+  no longer remember creating them. After compaction, trust the ledger and
+  `git log` over your recollection.
 
 Read the plan once, note its context and Global Constraints, and create a
 todo per task. If the plan names a Spec, read that too: the spec is the
@@ -117,14 +116,12 @@ prints back — stays resident in your context for the rest of the session
 and is re-read on every later turn. Hand artifacts over as files.
 
 **Waiting on dispatched subagents:** never poll a wait interface with
-short timeouts, and never sit in one silent, open-ended wait either.
-While you have local work — ledger updates, packaging the next review,
-reading reports — keep working; child results arrive on their own. When
-you are genuinely idle, wait in bounded stretches (five to ten minutes,
-where your platform allows), and between stretches post one line of
-status and reconcile your live children: list them, and chase any that
-finished without reporting. A stuck or lost child is then noticed within
-minutes, not at the end of the session.
+short timeouts, and never sit in one silent, open-ended wait. While you
+have local work — ledger updates, packaging the next review, reading
+reports — keep working; child results arrive on their own. When genuinely
+idle, wait in bounded stretches (five to ten minutes, where your platform
+allows); between stretches post one line of status and reconcile your
+live children: list them, and chase any that finished without reporting.
 
 ### 1. Dispatch the implementer
 
@@ -154,9 +151,8 @@ and fix-round diffs need it.
   constraints. Nothing else.
 - The implementer never dispatches subagents — not helpers, and never a
   reviewer (the no-subagents contract is in its template). Review arrives
-  from you, after the report. In real sessions, every reviewer a worker
-  spawned duplicated the task review the controller dispatched anyway — a
-  full extra review seat per task.
+  from you, after the report; a reviewer a worker spawns only duplicates
+  that seat at full cost.
 - Record the implementer's agent identity from the dispatch result —
   fix-loop rounds 1-3 resume this agent.
 - Never dispatch multiple implementation subagents in parallel (conflicts).
@@ -176,7 +172,7 @@ Use this exact prompt shape for every task's dispatch, not only the first: a han
 
 ### 2. Handle the report
 
-Implementer subagents report one of four statuses.
+Implementers report one of four statuses.
 
 **DONE:** review the task (step 3).
 
@@ -185,13 +181,13 @@ Implementer subagents report one of four statuses.
 it, every time you get one.
 
 If the implementer asks questions — before starting or mid-task — answer
-clearly and completely, provide additional context if needed, and don't
-rush it into implementation.
+clearly and completely, with extra context if needed; don't rush it into
+implementation.
 
 ### 3. Review the task
 
 Per-task reviews are task-scoped gates; the broad review happens once, at
-the final whole-branch review. Never skip the task review, and never
+the end. Never skip the task review, and never
 accept a report missing either verdict — spec compliance AND task quality
 are both required. Implementer self-review never replaces the task
 review; both are needed.
@@ -202,10 +198,9 @@ review; both are needed.
   `git diff --stat`, and `git diff -U10` for the range, redirected to one
   uniquely named file). BASE is the commit you recorded before
   dispatching the implementer — never `HEAD~1`, which silently drops all
-  but the last commit of a multi-commit task. The package never enters
-  your context; the reviewer reads the commit list, stat summary, and full
-  diff in one Read call. Never dispatch a task reviewer without a diff
-  file.
+  but the last commit of a multi-commit task. The package stays out of
+  your context; the reviewer reads it in one call. Never dispatch a task
+  reviewer without a diff file.
 - **Reviewer inputs:** three paths — the same brief file, the report file,
   and the review package — plus the global constraints that bind the task.
 - The global-constraints block is the reviewer's attention lens. Copy the
@@ -254,8 +249,8 @@ round writes, and your memory of it does not survive compaction.
 ### 5. Complete the task
 
 When the review comes back clean — or every open finding is parked with a
-ruling at the cap — append the completion line to the ledger with your
-other bookkeeping:
+ruling at the cap — append the completion line to the ledger in the same
+message as your other bookkeeping:
 
 - `Task <N>: complete (commits <base7>..<head7>, review clean)`
 - `Task <N>: complete (commits <base7>..<head7>, <K> parked)` after a
@@ -268,8 +263,8 @@ parked-with-ruling at the cap.
 ## Final Review
 
 When every task is complete, read
-[references/final-review.md](references/final-review.md) and follow it. It
-covers the whole-branch review and its single fix wave; then Finish.
+[references/final-review.md](references/final-review.md) and follow it
+(whole-branch review, single fix wave), then Finish.
 
 ## Finish
 
@@ -279,10 +274,10 @@ containing `Ruling:` — preflight rulings, parked findings, breaker
 adjudications, all of them — under "Rulings I made", highest
 cost-if-wrong first, each with what it costs if wrong; every
 `minor (deferred)` line no fix addressed, under "Deferred minors". Both
-lists are exhaustive: if the ledger holds it, the list holds it. That
-message is the only place the decisions you took on your human partner's
-behalf reach them — they read it and rework whatever you got wrong. A
-ruling that dies with the workspace was a decision made in secret.
+lists are exhaustive. That message is the only place the decisions you
+took on your human partner's behalf reach them — they read it and rework
+whatever you got wrong. A ruling that dies with the workspace was a
+decision made in secret.
 
 When the final review is clean and its fixes are committed, delete this
 plan's workspace (`rm -rf <workspace>`) — the git history is the record
@@ -294,12 +289,12 @@ Use superpowers:finishing-a-development-branch.
 
 | Excuse | Reality |
 |--------|---------|
-| "Close enough on spec compliance" | Reviewer found spec gaps = not done. Fix or hit the cap and adjudicate — those are the only exits. |
+| "Close enough on spec compliance" | Spec gaps = not done. Fix, or hit the cap and adjudicate — the only exits. |
 | "I'll fix it myself, dispatching is overhead" | Controller fixes pollute your context and skip review. Resume the implementer. |
-| "One more round will converge" | Past the cap, rounds don't converge — the failure is structural. Adjudicate and route. |
+| "One more round will converge" | Past the cap, the failure is structural. Adjudicate and route. |
 | "The reviewer will just find something new anyway" | Scoped re-reviews verify fixes; they cannot wander. New findings on untouched code go to the ledger, not the loop. |
 | "This finding is obviously wrong, I'll drop it" | You rule only at the cap or on a plan-mandated finding (references/fix-loop.md), and every ruling is a ledger entry. Silent discards are forbidden. |
 | "The fix was small, skip the re-review" | Unreviewed fixes are how regressions land. Every round ends with a scoped re-review. |
-| "Reviews slow the loop down" | The loop without reviews is just unverified churn. Reviews are the loop's brakes and steering. |
-| "Ledger bookkeeping is overhead" | The ledger is what survives compaction. Controllers without one have re-dispatched entire completed task sequences. |
-| "The implementer spawned its own reviewer — free extra assurance" | It's a duplicate seat reviewing the same diff; the task review is the gate. A worker-spawned reviewer is a defect to flag, not rigor. |
+| "Reviews slow the loop down" | Without reviews the loop is unverified churn. |
+| "Ledger bookkeeping is overhead" | The ledger is what survives compaction. Without it you re-dispatch finished tasks. |
+| "The implementer spawned its own reviewer — free extra assurance" | A duplicate seat on the same diff; the task review is the gate. Flag it as a defect. |
