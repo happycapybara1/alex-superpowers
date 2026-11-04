@@ -14,7 +14,7 @@ Use the existing V1 plugin configuration:
 
 ```json
 {
-  "plugin": ["alex-superpowers@git+https://github.com/happycapybara1/alex-superpowers.git"]
+  "plugin": ["alex-superpowers@git+https://github.com/happycapybara1/superpowers-alex.git"]
 }
 ```
 
@@ -24,7 +24,7 @@ Use the V2 plugin configuration:
 
 ```json
 {
-  "plugins": ["alex-superpowers@git+https://github.com/happycapybara1/alex-superpowers.git"]
+  "plugins": ["alex-superpowers@git+https://github.com/happycapybara1/superpowers-alex.git"]
 }
 ```
 
@@ -79,7 +79,7 @@ V1 `plugin` key and the V2 `plugins` key):
 
 ```json
 {
-  "plugin": ["alex-superpowers@git+https://github.com/happycapybara1/alex-superpowers.git#main"]
+  "plugin": ["alex-superpowers@git+https://github.com/happycapybara1/superpowers-alex.git#main"]
 }
 ```
 
@@ -105,7 +105,7 @@ the plugin, try installing with system npm and pointing OpenCode at the local
 package:
 
 ```powershell
-npm install alex-superpowers@git+https://github.com/happycapybara1/alex-superpowers.git --prefix "$HOME\.config\opencode"
+npm install alex-superpowers@git+https://github.com/happycapybara1/superpowers-alex.git --prefix "$HOME\.config\opencode"
 ```
 
 Then use the absolute path of the installed package in `opencode.json` for your
@@ -162,5 +162,5 @@ Skills speak in actions ("create a todo", "dispatch a subagent", "read a file").
 
 ## Getting Help
 
-- Report issues: https://github.com/happycapybara1/alex-superpowers/issues
-- Full documentation: https://github.com/happycapybara1/alex-superpowers/blob/main/docs/README.opencode.md
+- Report issues: https://github.com/happycapybara1/superpowers-alex/issues
+- Full documentation: https://github.com/happycapybara1/superpowers-alex/blob/main/docs/README.opencode.md
