@@ -63,6 +63,13 @@ Subagent (general-purpose):
     verdict counts for nothing. If the diff feels too large for one
     pass, review it in passes yourself and say so in your report.
 
+    ## Read Beyond the Diff
+
+    A change can break code it does not touch. Read the code around the
+    diff: callers of every changed function, the functions it calls, and
+    their tests. When a signature, return value or behavior changes, grep
+    every caller.
+
     ## What to Check
 
     **Plan alignment:**
@@ -95,7 +102,20 @@ Subagent (general-purpose):
     - Documentation complete?
     - No obvious bugs?
 
+    **Lean (code that should not exist):**
+    - Dead code, unused options, speculative features?
+    - A helper the repo already has (name its path), or something the
+      standard library or platform already does?
+    - A new dependency for a few lines of code?
+    - An abstraction with one implementation, or config nobody sets?
+
     ## Calibration
+
+    Every bug or risk you report needs a concrete case: this input or
+    situation leads to this wrong result. No case, no issue. Before
+    reporting, re-read the lines and confirm it: the caller exists, the
+    value can really be empty, the code really is unused. A plan deviation
+    cites the plan instead.
 
     Categorize issues by actual severity. Not everything is Critical.
     List strengths briefly after issues.
@@ -126,9 +146,10 @@ Subagent (general-purpose):
 
     For each issue:
     - File:line reference
-    - What's wrong
+    - What's wrong, with the concrete case or the plan line
     - Why it matters
-    - How to fix (if not obvious)
+    - How to fix (if not obvious): the smallest fix that works; prefer
+      one that deletes code
 
     ### Strengths
     [What's well done? Be specific, and brief.]
