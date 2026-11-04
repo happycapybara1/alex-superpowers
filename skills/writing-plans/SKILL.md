@@ -7,43 +7,30 @@ description: Use when you have a spec or requirements for a multi-step task, bef
 
 ## Overview
 
-Write implementation plans for an engineer who has not seen this codebase or this spec. Assume they write idiomatic code in the project's language once they know the exact interface and the exact test, and that they will make a reasonable choice wherever the plan leaves one open. What they cannot know is what you decided: which files, which names and signatures, which values from the spec, which tests prove each task. Document those. Give them the whole plan as bite-sized tasks. DRY. YAGNI. TDD. Frequent commits.
+Write implementation plans for an engineer who has not seen this codebase or this spec. Assume they write idiomatic code in the project's language once they know the exact interface and test, and make a reasonable choice wherever the plan leaves one open. What they cannot know is what you decided: files, names and signatures, values from the spec, the tests that prove each task. Document those, as bite-sized tasks. DRY. YAGNI. TDD. Frequent commits.
 
-**Save plans to:** `docs/superpowers/plans/YYYY-MM-DD-<feature-name>.md`
-- (User preferences for plan location override this default)
+**Save plans to:** `docs/superpowers/plans/YYYY-MM-DD-<feature-name>.md` (user preferences for plan location override this).
 
 ## Scope Check
 
-If the spec covers multiple independent subsystems, it should have been broken into sub-project specs during brainstorming. If it wasn't, suggest breaking this into separate plans — one per subsystem. Each plan should produce working, testable software on its own.
+If the spec covers multiple independent subsystems (brainstorming should have split it into sub-project specs), suggest separate plans, one per subsystem, each producing working, testable software on its own.
 
 ## File Structure
 
-Before defining tasks, map out which files will be created or modified and what each one is responsible for. This is where decomposition decisions get locked in.
+Before defining tasks, map which files will be created or modified and what each is responsible for. This locks in the decomposition; each task should then produce self-contained changes that make sense independently.
 
-- Design units with clear boundaries and well-defined interfaces. Each file should have one clear responsibility.
-- You reason best about code you can hold in context at once, and your edits are more reliable when files are focused. Prefer smaller, focused files over large ones that do too much.
-- Files that change together should live together. Split by responsibility, not by technical layer.
-- In existing codebases, follow established patterns. If the codebase uses large files, don't unilaterally restructure - but if a file you're modifying has grown unwieldy, including a split in the plan is reasonable.
-
-This structure informs the task decomposition. Each task should produce self-contained changes that make sense independently.
+- Design units with clear boundaries and well-defined interfaces, one clear responsibility per file.
+- Prefer smaller, focused files: you reason and edit more reliably on code you can hold in context at once.
+- Files that change together live together. Split by responsibility, not by technical layer.
+- In existing codebases, follow established patterns; don't unilaterally restructure, though splitting a file you're modifying that has grown unwieldy is reasonable.
 
 ## Task Right-Sizing
 
-A task is the smallest unit that carries its own test cycle and is worth a
-fresh reviewer's gate. When drawing task boundaries: fold setup,
-configuration, scaffolding, and documentation steps into the task whose
-deliverable needs them; split only where a reviewer could meaningfully
-reject one task while approving its neighbor. Each task ends with an
-independently testable deliverable.
+A task is the smallest unit that carries its own test cycle and is worth a fresh reviewer's gate. Fold setup, configuration, scaffolding, and documentation into the task whose deliverable needs them; split only where a reviewer could meaningfully reject one task while approving its neighbor. Each task ends with an independently testable deliverable.
 
 ## Step Granularity
 
-**Each step is one action with a checkable result:**
-- "Write the failing test" - step
-- "Run it to make sure it fails" - step
-- "Implement the minimal code to make the test pass" - step
-- "Run the tests and make sure they pass" - step
-- "Commit" - step
+Each step is one action with a checkable result: write the failing test; run it to make sure it fails; implement the minimal code to pass; run the tests and make sure they pass; commit.
 
 ## Plan Document Header
 
@@ -60,27 +47,25 @@ independently testable deliverable.
 
 **Tech Stack:** [Key technologies/libraries]
 
-**Spec:** [path to the spec/design doc this plan implements — the plan
-argues from the spec, so the spec travels with it; executors read both]
+**Spec:** [path to the spec/design doc this plan implements; it travels
+with the plan, and executors read both]
 
 ## Global Constraints
 
 [The spec's project-wide requirements — version floors, dependency limits,
-naming and copy rules, platform requirements — one line each, with exact
-values copied verbatim from the spec. Every task's requirements implicitly
-include this section.]
+naming and copy rules, platform requirements — one line each, exact values
+copied verbatim from the spec. Every task's requirements implicitly include
+this section.]
 
 ## Review Focus
 
 [Up to five input classes or failure modes the spec implies but no task's
-tests exercise that are most likely to bite a person using this software
-— one line each, naming the input or condition and the behavior a
-reasonable person would expect, most likely first. The spec is a vision
-document: it says what the software must do, not everything it will
-meet, and its silence on an input is not permission for that input to
-break the program. Write the list here, once, with the spec in front of
-you. Then, for each line, add the test that pins it to the task that
-owns the code, in that task's own step style.]
+tests exercise, most likely to bite a person using this software first —
+one line each: the input or condition, and the behavior a reasonable
+person would expect. The spec's silence on an input is not permission for
+it to break the program. Write the list once, with the spec in front of
+you, then add each line's test to the task that owns the code, in that
+task's step style.]
 
 ---
 ```
@@ -98,8 +83,8 @@ owns the code, in that task's own step style.]
 **Interfaces:**
 - Consumes: [what this task uses from earlier tasks — exact signatures]
 - Produces: [what later tasks rely on — exact function names, parameter
-  and return types. A task's implementer sees only their own task; this
-  block is how they learn the names and types neighboring tasks use.]
+  and return types. Implementers see only their own task; this block
+  tells them the names and types neighboring tasks use.]
 
 - [ ] **Step 1: Write the failing test**
 
@@ -135,50 +120,30 @@ git commit -m "feat: add specific feature"
 
 ## What a Step Contains
 
-A step is done when the implementer can write exactly one reasonable thing
-from it. That is the whole requirement: unambiguous, not complete. Each kind
-of step carries what makes it unambiguous and nothing more:
+A step is done when the implementer can write exactly one reasonable thing from it: unambiguous, not complete. Each kind carries only what makes it so:
 
-- **A test step:** the test's name and its assertions, as code, with the
-  spec's exact values in them.
-- **A code step:** the exact signature (name, parameters, return type), the
-  file it lives in, and the specific values the spec pins. The implementer
-  writes the body. A body appears only for an algorithm the signature and
-  tests do not determine, or for exact copy the spec fixes.
-- **A verification step:** the command to run and the output that means it
-  passed.
-- **A reference to another task:** that task's Interfaces block says what
-  to use; the plan does not repeat that task's code.
+- **A test step:** the test's name and assertions, as code, with the spec's exact values.
+- **A code step:** the exact signature (name, parameters, return type), its file, and the values the spec pins. The implementer writes the body; include one only for an algorithm the signature and tests don't determine, or for exact copy the spec fixes.
+- **A verification step:** the command and the output that means it passed.
+- **A reference to another task:** point to that task's Interfaces block; don't repeat its code.
 
-A plan is the set of decisions the implementer cannot make alone. A plan
-longer than the code it describes has written the code instead. Lines that
-decide nothing ("TBD", "handle edge cases", "add appropriate validation",
-"write tests for the above", a type or function no task defines) are the
-opposite failure, and the self-review catches both.
+A plan is the decisions the implementer can't make alone; one longer than the code it describes has written the code instead. Lines that decide nothing ("TBD", "handle edge cases", "add appropriate validation", "write tests for the above", a type or function no task defines) are the opposite failure.
 
 ## Self-Review
 
-After writing the complete plan, look at the spec with fresh eyes and check the plan against it. This is a checklist you run yourself — not a subagent dispatch.
+After writing the complete plan, check it against the spec with fresh eyes. This is a checklist you run yourself, not a subagent dispatch.
 
-**1. Spec coverage:** Skim each section/requirement in the spec. Can you point to a task that implements it? List any gaps.
+1. **Spec coverage:** for each spec section or requirement, point to the task that implements it. Add a task for any gap.
+2. **Step scan:** check every step against What a Step Contains. Fix lines that decide nothing (gaps) and bodies the signature and tests already determine (transcripts).
+3. **Type consistency:** types, signatures, and property names in later tasks match their definitions in earlier ones (`clearLayers()` in Task 3 but `clearFullLayers()` in Task 7 is a bug).
+4. **Review Focus:** for each input class or failure mode the spec implies, find a task whose tests exercise it. Up to five uncovered ones most likely to bite a person go in Review Focus, each with its test added to the owning task. An empty section means you checked and found none, not that you skipped the check.
+5. **Proportion:** a plan several times longer than its spec is a transcript of the program. If code blocks are most of the document, replace bodies with signatures, test names and assertions, keeping each step unambiguous.
 
-**2. Step scan:** Every step must let the implementer write exactly one reasonable thing, and no step may carry more than that: a line that decides nothing is a gap, a function body the signature and tests already determine is a transcript. Fix both.
-
-**3. Type consistency:** Do the types, method signatures, and property names you used in later tasks match what you defined in earlier tasks? A function called `clearLayers()` in Task 3 but `clearFullLayers()` in Task 7 is a bug.
-
-**4. Review Focus:** For each input class or failure mode the spec implies, is there a task whose tests exercise it? Up to five uncovered ones most likely to bite a person go in the Review Focus section, and each line there gets its test added to the owning task. An empty section means you checked and found none, not that you skipped the check.
-
-**5. Proportion:** Compare the plan's length to the spec's. A plan several times longer than the spec it implements is a transcript of the program, not a plan. If code blocks are most of the document, replace bodies with signatures, test names and assertions, and check that each step is still unambiguous.
-
-If you find issues, fix them inline. No need to re-review — just fix and move on. If you find a spec requirement with no task, add the task.
+Fix issues inline and move on; no need to re-review.
 
 ## Execution Handoff
 
-After saving and self-reviewing the plan, link it for your human partner
-to read. If they have already explicitly supplied an execution method, ask
-them to review the plan and confirm it captures what they want; wait for that
-review before implementation, then use the preserved method. Otherwise, ask
-them to review the plan and choose an execution method before implementation.
+After saving and self-reviewing the plan, link it for your human partner and wait for their review before implementation. If they already explicitly supplied an execution method, ask them to confirm the plan captures what they want, then use that method; otherwise, also ask them to choose one.
 
 **When no execution method has already been supplied:**
 
@@ -193,8 +158,6 @@ them to review the plan and choose an execution method before implementation.
 
 **"Plan complete and saved to `docs/superpowers/plans/<filename>.md`. Please review the plan. Does it capture what you want?"**
 
-**If Subagent-driven chosen:**
-- **REQUIRED SUB-SKILL:** Use superpowers:subagent-driven-development
+**If Subagent-driven chosen:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development
 
-**If Inline chosen:**
-- **REQUIRED SUB-SKILL:** Use superpowers:executing-plans
+**If Inline chosen:** REQUIRED SUB-SKILL: Use superpowers:executing-plans

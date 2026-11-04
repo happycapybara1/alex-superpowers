@@ -24,25 +24,12 @@ dispatched by path as in fix-loop.md).
 Adjudicate any residual findings as in the fix loop's breaker
 (references/fix-loop.md): park with rulings, or rule on the load-bearing
 ones and ledger what you decided. Only the four things that stop a running
-plan (top of SKILL.md) stop you here. There is no second fix wave —
-residual load-bearing findings surface to your human partner when
-finishing-a-development-branch presents the options.
+plan ([execution-rules.md](execution-rules.md)) stop you here. There is no
+second fix wave — residual load-bearing findings surface to your human
+partner when finishing-a-development-branch presents the options.
 
 ### Finish
 
-Before you delete anything, write your final message. Open it with one
-line: tasks done, suite status, and how many rulings you made. Then collect
-every ledger line containing `Ruling:` — preflight rulings, parked findings,
-breaker adjudications, all of them — under "Rulings I made", highest
-cost-if-wrong first, each with what it costs if wrong. The list is exhaustive: if the ledger holds a
-ruling, the list holds it. That list is the only place the decisions you
-took on your human partner's behalf reach them — they read it and rework
-whatever you got wrong. A ruling that dies with the workspace was a decision
-made in secret.
-
-When the final whole-branch review is clean and its fixes are merged,
-delete this plan's workspace (`rm -rf <workspace>`) — the git history is
-the record now. Sibling directories belong to other plans; leave them
-alone.
-
-Use superpowers:finishing-a-development-branch.
+Read the Finish section of [execution-rules.md](execution-rules.md) now
+and follow it: the final message with "Rulings I made" and "Deferred
+minors", workspace cleanup, then superpowers:finishing-a-development-branch.
