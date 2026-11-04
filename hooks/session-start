@@ -15,6 +15,31 @@ case "$0" in
 esac
 PLUGIN_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
+# alex-ring loads superpowers on demand: it asks the user before the first
+# coding reply. While the ring is installed and enabled in Claude Code, stay
+# quiet here. Pure bash (no grep) for the same broken-PATH reason as above.
+# The most specific settings file that names the ring decides: project local,
+# then project, then user, as Claude Code resolves enabledPlugins.
+ring_active() {
+  local cfg="${CLAUDE_CONFIG_DIR:-${HOME:-}/.claude}" project="${CLAUDE_PROJECT_DIR:-$PWD}" f s
+  [ -r "$cfg/plugins/installed_plugins.json" ] || return 1
+  s="$(<"$cfg/plugins/installed_plugins.json")"
+  [[ "$s" == *'"alex-ring@'* ]] || return 1
+  for f in "$project/.claude/settings.local.json" "$project/.claude/settings.json" "$cfg/settings.json"; do
+    [ -r "$f" ] || continue
+    s="$(<"$f")"
+    if [[ "$s" =~ \"alex-ring@[^\"]*\"[[:space:]]*:[[:space:]]*(true|false) ]]; then
+      [ "${BASH_REMATCH[1]}" = true ]
+      return
+    fi
+  done
+  return 1
+}
+if [ -n "${CLAUDE_PLUGIN_ROOT:-}" ] && [ -z "${COPILOT_CLI:-}" ] && [ -z "${CURSOR_PLUGIN_ROOT:-}" ] \
+  && [ -z "${MUSE_PLUGIN_ROOT:-}" ] && ring_active; then
+  exit 0
+fi
+
 # Read using-superpowers content via bash's builtin $(< file) instead of
 # cat, for the same PATH-independence reason.
 skill_md="${PLUGIN_ROOT}/skills/using-superpowers/SKILL.md"

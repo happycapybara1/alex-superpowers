@@ -317,6 +317,60 @@ else
     fail "session-start pipes its JSON through cat when cat is on PATH"
 fi
 
+# alex-ring: superpowers stays quiet at session start while the ring is
+# installed and enabled, and only then.
+ring_home() {
+    local name="$1" user_value="$2" local_value="$3" installed="$4"
+    local home project
+    home="$(make_home "$name")"
+    project="$TEST_ROOT/$name/project"
+    mkdir -p "$home/.claude/plugins" "$project/.claude"
+    if [[ "$installed" == yes ]]; then
+        printf '{"version":2,"plugins":{"alex-ring@alex":[{"scope":"user"}]}}\n' > "$home/.claude/plugins/installed_plugins.json"
+    else
+        printf '{"version":2,"plugins":{}}\n' > "$home/.claude/plugins/installed_plugins.json"
+    fi
+    [[ -z "$user_value" ]] || printf '{"enabledPlugins":{"alex-ring@alex": %s}}\n' "$user_value" > "$home/.claude/settings.json"
+    [[ -z "$local_value" ]] || printf '{"enabledPlugins":{"alex-ring@alex": %s}}\n' "$local_value" > "$project/.claude/settings.local.json"
+    printf '%s\n' "$home"
+}
+
+assert_quiet() {
+    local description="$1" home="$2"
+    shift 2
+    local output
+    if output="$(cd "$TEST_ROOT" && env -i PATH="${PATH:-}" HOME="$home" "$@" 2>&1)" && [[ -z "$output" ]]; then
+        pass "$description"
+    else
+        fail "$description"
+        echo "$output" | sed 's/^/      /'
+    fi
+}
+
+home="$(ring_home ring-on true "" yes)"
+assert_quiet "alex-ring enabled: session-start prints nothing" "$home" \
+    CLAUDE_PLUGIN_ROOT="$REPO_ROOT" CLAUDE_PROJECT_DIR="$TEST_ROOT/ring-on/project" bash "$HOOK_UNDER_TEST"
+
+home="$(ring_home ring-disabled false "" yes)"
+assert_command_output "alex-ring disabled: the bootstrap loads as usual" "nested" "" "" "$home" \
+    CLAUDE_PLUGIN_ROOT="$REPO_ROOT" CLAUDE_PROJECT_DIR="$TEST_ROOT/ring-disabled/project" bash "$HOOK_UNDER_TEST"
+
+home="$(ring_home ring-local-off true false yes)"
+assert_command_output "alex-ring off in this project's local settings: the bootstrap loads" "nested" "" "" "$home" \
+    CLAUDE_PLUGIN_ROOT="$REPO_ROOT" CLAUDE_PROJECT_DIR="$TEST_ROOT/ring-local-off/project" bash "$HOOK_UNDER_TEST"
+
+home="$(ring_home ring-local-on "" true yes)"
+assert_quiet "alex-ring on only in this project: session-start prints nothing" "$home" \
+    CLAUDE_PLUGIN_ROOT="$REPO_ROOT" CLAUDE_PROJECT_DIR="$TEST_ROOT/ring-local-on/project" bash "$HOOK_UNDER_TEST"
+
+home="$(ring_home ring-not-installed true "" no)"
+assert_command_output "a stale alex-ring setting without the install: the bootstrap loads" "nested" "" "" "$home" \
+    CLAUDE_PLUGIN_ROOT="$REPO_ROOT" CLAUDE_PROJECT_DIR="$TEST_ROOT/ring-not-installed/project" bash "$HOOK_UNDER_TEST"
+
+home="$(ring_home ring-copilot true "" yes)"
+assert_command_output "Copilot CLI ignores alex-ring (Claude Code only)" "sdk" "" "" "$home" \
+    CLAUDE_PLUGIN_ROOT="$REPO_ROOT" COPILOT_CLI=1 CLAUDE_PROJECT_DIR="$TEST_ROOT/ring-copilot/project" bash "$HOOK_UNDER_TEST"
+
 if [[ "$FAILURES" -gt 0 ]]; then
     echo "STATUS: FAILED ($FAILURES failure(s))"
     exit 1
