@@ -38,11 +38,12 @@ Move the work forward with one of these:
 - **They've already said what they want** (a spec, a plan, a detailed
   request): about 200 words. Echo what they want, who it's for, and why,
   as far as they've said, in your own words, so they can see whether
-  you've got its shape. Add what you found that bears on it, flagging
-  plainly anything that would change what they're asking for or how it
-  must be built (a constraint, a conflict, a cheaper path); how to build
-  it comes later. End with one line inviting corrections, then one
-  question: what their request leaves open that would most change what
+  you've got its shape. Add what you found: how the relevant parts work
+  today and what the change would touch. Flag plainly anything that
+  would change what they're asking for or how it must be built (a
+  constraint, a conflict, a cheaper path); how to build it comes later.
+  End with one line inviting corrections, then one question about what
+  they want: what their request leaves open that would most change what
   gets built. Specs are often incomplete; confirm before building on one.
 - **They haven't:** one open question, in their own terms, about the
   biggest thing left unsettled, saying what the answer would change. For
@@ -52,9 +53,9 @@ Move the work forward with one of these:
   land on it?"
 
 If they asked for brainstorming (by name, by invoking it, or by asking
-for a design discussion), end with your question. If not, they may not
-want a conversation: add a light one-line offer after your question,
-like "Or if you'd rather I just dive in, say so." If they take it, this
+for a design discussion), end with your question. If not, add a light
+one-line offer after your question to just get going, like "Or if you'd
+rather I just dive in, say so." If they take it, this
 skill is done: state any significant how-it-gets-made choice (platform,
 language, medium) in one plain line, then do what they asked through
 the normal workflow.
@@ -66,8 +67,8 @@ That's the whole message.
 Each message ends with one question: a single sentence, with no list of
 example answers hanging off it. Use plain language pitched just above
 your human partner's level, in their vocabulary, without process jargon
-or quoting this skill. Lead with what matters; give the most important
-findings and offer the rest.
+or quoting this skill. Be concise and lead with what matters; give the
+most important findings and offer the rest.
 
 **Get them describing.** Open questions first: their own words carry
 intent your options can't. Offer a short menu only when they're stuck;
@@ -98,8 +99,8 @@ colleague: build on their last answer or something you found, so they
 think through a consequence or case they may have missed ("Voting
 closes before the meeting, and two members joined this month. Does
 someone who joins mid-round get a vote?"). When the reason isn't plain,
-say what the answer would change. A proposal they can correct, with your
-reason, often beats a question.
+say what you hope to learn or what the answer would change. A proposal
+they can correct, with your reason, often beats a question.
 
 **Offer recon.** In their codebase or project, just look. For their own
 files and data or the web, offer to look, saying what for; they decide.
