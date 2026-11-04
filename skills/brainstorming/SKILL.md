@@ -1,6 +1,6 @@
 ---
 name: brainstorming
-description: "Use before building, adding or changing anything non-trivial: features, components, behavior changes, new plans."
+description: "Use before building, adding or changing features, components or behavior, or planning anything new."
 ---
 
 # Brainstorming
