@@ -28,6 +28,7 @@ These thoughts usually mean you're skipping a skill you need:
 
 | Thought | Reality |
 |---------|---------|
+| "This is just a simple question" | A question about code, a review, a plan, or something to build is a task: check for skills. |
 | "The skill is overkill" | Simple things become complex. Use it. |
 | "I'll just do this one thing first" | Check before doing anything. |
 
