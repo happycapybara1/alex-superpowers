@@ -2,7 +2,7 @@
 
 Superpowers is a complete software development methodology for your coding agents, built on top of a set of composable skills and some initial instructions that make sure your agent uses them.
 
-> **Fork of [obra/superpowers](https://github.com/obra/superpowers)** (version `7.0.2-alx`): skills reviewed and compressed, packaging trimmed to Claude Code, Codex, Gemini CLI, GitHub Copilot CLI, OpenCode, and Hermes. Install from this repository as below, after removing any upstream Superpowers install (both use the plugin name `superpowers`).
+> **Fork of [obra/superpowers](https://github.com/obra/superpowers)** (version `7.0.3-alx`): skills reviewed and compressed, packaging trimmed to Claude Code, Codex, Gemini CLI, GitHub Copilot CLI, OpenCode, and Hermes. Install from this repository as below, after removing any upstream Superpowers install (both use the plugin name `superpowers`).
 
 ## Table of Contents
 

@@ -15,7 +15,7 @@ case "$0" in
 esac
 PLUGIN_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
-# alex-ring loads superpowers on demand: it asks the user before the first
+# alex-plugins-home (the ring; formerly alex-ring) loads superpowers on demand: it asks the user before the first
 # coding reply. While the ring is installed and enabled in Claude Code, stay
 # quiet here. Pure bash (no grep) for the same broken-PATH reason as above.
 # The most specific settings file that names the ring decides: project local,
@@ -24,12 +24,12 @@ ring_active() {
   local cfg="${CLAUDE_CONFIG_DIR:-${HOME:-}/.claude}" project="${CLAUDE_PROJECT_DIR:-$PWD}" f s
   [ -r "$cfg/plugins/installed_plugins.json" ] || return 1
   s="$(<"$cfg/plugins/installed_plugins.json")"
-  [[ "$s" == *'"alex-ring@'* ]] || return 1
+  [[ "$s" == *'"alex-plugins-home@'* || "$s" == *'"alex-ring@'* ]] || return 1
   for f in "$project/.claude/settings.local.json" "$project/.claude/settings.json" "$cfg/settings.json"; do
     [ -r "$f" ] || continue
     s="$(<"$f")"
-    if [[ "$s" =~ \"alex-ring@[^\"]*\"[[:space:]]*:[[:space:]]*(true|false) ]]; then
-      [ "${BASH_REMATCH[1]}" = true ]
+    if [[ "$s" =~ \"(alex-plugins-home|alex-ring)@[^\"]*\"[[:space:]]*:[[:space:]]*(true|false) ]]; then
+      [ "${BASH_REMATCH[2]}" = true ]
       return
     fi
   done

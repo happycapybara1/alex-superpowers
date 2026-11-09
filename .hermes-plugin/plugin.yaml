@@ -1,5 +1,5 @@
 name: alex-superpowers
-version: 7.0.2-alx
+version: 7.0.3-alx
 description: Superpowers skills and workflow bootstrap for Hermes Agent
 author: obra
 provides_hooks:

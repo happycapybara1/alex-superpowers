@@ -1,6 +1,6 @@
 {
   "name": "alex-superpowers",
-  "version": "7.0.2-alx",
+  "version": "7.0.3-alx",
   "description": "Superpowers skills and runtime bootstrap for coding agents",
   "type": "module",
   "main": ".opencode/plugins/superpowers.js",
